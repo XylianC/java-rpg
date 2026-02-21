@@ -3,6 +3,7 @@ package domain;
 public class PlayerCharacter {
     // -- Attributen -- //
     private final String charName;
+    private final String charClass;
     
     private int charLevel;
     private int exp;
@@ -14,16 +15,17 @@ public class PlayerCharacter {
     private int hp;
     private int maxHP;
     
-    
+    private static final String DEFAULT_CLASS = "Mage";
     private static final int DEFAULT_HP = 100;
     private static final int DEFAULT_SKILL_LEVEL = 1;
     
     
     // -- Constructors -- //
     
-    public PlayerCharacter(String name, int lvl, int str, int intel) {
+    public PlayerCharacter(String name, String job, int lvl, int str, int intel) {
         checkName(name);
         this.charName = name;
+        this.charClass = job;
         
         setCharLevel(lvl);
         setCharStrength(str);
@@ -33,9 +35,24 @@ public class PlayerCharacter {
         setMaxHP(DEFAULT_HP);
     }
     
+    public PlayerCharacter(String name, String job) {
+        checkName(name);
+        this.charName = name;
+        checkJob(job);
+        this.charClass = job;
+        
+        setCharLevel(DEFAULT_SKILL_LEVEL);
+        setCharStrength(DEFAULT_SKILL_LEVEL);
+        setCharIntelligence(DEFAULT_SKILL_LEVEL);
+        
+        setHp(DEFAULT_HP);
+        setMaxHP(DEFAULT_HP);
+    }
+    
     public PlayerCharacter(String name) {
         checkName(name);
         this.charName = name;
+        this.charClass = DEFAULT_CLASS;
         
         setCharLevel(DEFAULT_SKILL_LEVEL);
         setCharStrength(DEFAULT_SKILL_LEVEL);
@@ -49,6 +66,10 @@ public class PlayerCharacter {
     // -- Getters -- //
     public String getCharName() {
         return charName;
+    }
+    
+    public String getCharClass() {
+        return charClass;
     }
     
     public int getCharLevel() {
@@ -93,7 +114,11 @@ public class PlayerCharacter {
     }
     
     public void setHp(int hp) {
-        this.hp = hp;
+        if(hp >= 0) {
+            this.hp = hp;
+        } else {
+            throw new IllegalArgumentException("Character HP can not be below 0!");
+        }
     }
     
     public void setMaxHP(int maxHP) {
@@ -102,7 +127,15 @@ public class PlayerCharacter {
     
     // -- Andere Methoden -- //
     private void checkName(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Character name can not be null!");
+        }
+    }
     
+    private void checkJob(String job) {
+        if (job == null || job.isBlank()) {
+            throw new IllegalArgumentException("Character job name can not be null!");
+        }
     }
     
     
@@ -118,6 +151,6 @@ public class PlayerCharacter {
     
     @Override
     public String toString() {
-        return String.format("Character: %s%n-Health: %d / %d %n- Stats: LVL: %d, STR: %d, INT: %d ",getCharName(), getHp(), getMaxHP(), getCharLevel(), getCharStrength(), getCharIntelligence());
+        return String.format("Character: %s Class: %s %n- Health: %d / %d %n- Stats: LVL: %d, STR: %d, INT: %d ",getCharName(), getCharClass(), getHp(), getMaxHP(), getCharLevel(), getCharStrength(), getCharIntelligence());
     }
 }
