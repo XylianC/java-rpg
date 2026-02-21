@@ -1,4 +1,4 @@
-package rpg.domain;
+package domain;
 
 public class PlayerCharacter {
     // -- Attributen -- //

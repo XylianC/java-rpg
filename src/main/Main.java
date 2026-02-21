@@ -1,7 +1,7 @@
-package rpg.main;
+package main;
 
 
-import rpg.domain.PlayerCharacter;
+import domain.PlayerCharacter;
 
 public class Main {
     public static void main(String[] args) {
