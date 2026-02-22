@@ -19,11 +19,17 @@ public class PlayerParty {
     // -- Andere Methoden -- //
     @Override
     public String toString() {
-        return String.format("The Party: %n" +
-                "Slot 1: " + players[0].toString() + "%n" +
-                "Slot 2: " + players[1].toString() + "%n" +
-                "Slot 3: " + players[2].toString() + "%n" +
-                "Slot 4: " + players[3].toString() + "%n"
-                );
+        StringBuilder strB = new StringBuilder();
+        
+        strB.append("The party: \n");
+        
+        for (int i = 0; i < players.length; i++) {
+            strB.append("Slot ").append(i + 1).append(": ");
+            strB.append(players[i].toString());
+            strB.append("\n");
+            
+        }
+        
+        return strB.toString();
     }
 }

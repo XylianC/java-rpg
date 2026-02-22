@@ -1,6 +1,5 @@
 package main;
 
-
 import domain.Enemy;
 import domain.EnemyGroup;
 import domain.PlayerCharacter;
@@ -16,10 +15,9 @@ public class Main {
         
         System.out.printf(party.toString());
         
-        System.out.printf("%n%n%n");
+        System.out.printf("%n%n");
         
         System.out.printf(enemyGroup.toString());
-        
     }
     
     private static PlayerCharacter[] createTemplatePlayers() {

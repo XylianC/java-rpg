@@ -13,7 +13,6 @@ public class EnemyGroup {
         }
     }
     
-    
     // ------ Getters ------ //
     
     // ------ Setters ------ //
@@ -23,7 +22,7 @@ public class EnemyGroup {
         enemies.add(newEnemy);
     }
     
-    private void removeEnemy(int slot) {
+    public void removeEnemy(int slot) {
         enemies.remove(slot);
     }
     
