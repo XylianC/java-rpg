@@ -1,6 +1,6 @@
 package domain;
 
-public class Combatant {
+public abstract class Combatant {
     // -- Attributen -- //
     // Combatant is shortened to CMT
     
@@ -23,9 +23,9 @@ public class Combatant {
         checkName(name);
         this.name = name;
         
-        setCMTLevel(lvl);
-        setCMTStrength(str);
-        setCMTIntelligence(intel);
+        setLevel(lvl);
+        setStrength(str);
+        setIntelligence(intel);
         
         setHp(hp);
         setMaxHP(maxhp);
@@ -35,9 +35,9 @@ public class Combatant {
         checkName(name);
         this.name = name;
         
-        setCMTLevel(lvl);
-        setCMTStrength(str);
-        setCMTIntelligence(intel);
+        setLevel(lvl);
+        setStrength(str);
+        setIntelligence(intel);
         
         setHp(DEFAULT_HP);
         setMaxHP(DEFAULT_HP);
@@ -47,9 +47,9 @@ public class Combatant {
         checkName(name);
         this.name = name;
         
-        setCMTLevel(DEFAULT_SKILL_LEVEL);
-        setCMTStrength(DEFAULT_SKILL_LEVEL);
-        setCMTIntelligence(DEFAULT_SKILL_LEVEL);
+        setLevel(DEFAULT_SKILL_LEVEL);
+        setStrength(DEFAULT_SKILL_LEVEL);
+        setIntelligence(DEFAULT_SKILL_LEVEL);
         
         setHp(DEFAULT_HP);
         setMaxHP(DEFAULT_HP);
@@ -82,15 +82,15 @@ public class Combatant {
     
     // ---- Setters ---- //
     
-    public void setCMTLevel(int lvl) {
+    public void setLevel(int lvl) {
         this.level = lvl;
     }
     
-    public void setCMTStrength(int str) {
+    public void setStrength(int str) {
         this.strength = str;
     }
     
-    public void setCMTIntelligence(int intel) {
+    public void setIntelligence(int intel) {
         this.intelligence = intel;
     }
     
@@ -106,7 +106,7 @@ public class Combatant {
         this.maxHP = maxHP;
     }
     
-    // -- Andere Methoden -- //
+    // -- Class Specific Methods  -- //
     private void checkName(String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Combatant name can not be empty or null");
