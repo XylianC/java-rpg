@@ -1,0 +1,35 @@
+<attacks>
+    <attack>
+        <code>fire_bolt</code>
+        <name>Fire Bolt</name>
+        <element>Fire</element>
+        <baseDMG>10</baseDMG>
+        <baseACC>80</baseACC>
+        <isMagic>true</isMagic>
+    </attack>
+    <attack>
+        <code>lightning_bolt</code>
+        <name>Lightning Bolt</name>
+        <element>Electric</element>
+        <baseDMG>10</baseDMG>
+        <baseACC>80</baseACC>
+        <isMagic>true</isMagic>
+    </attack>
+    <attack>
+        <code>ice_bolt</code>
+        <name>Ice Bolt</name>
+        <element>Ice</element>
+        <baseDMG>10</baseDMG>
+        <baseACC>80</baseACC>
+        <isMagic>true</isMagic>
+    </attack>
+</attacks>
+
+<!--
+    private final String attackCode;
+    private final String attackName;
+    private final String element;
+    private final int baseDamage;
+    private final int baseAccuracy;
+    private final boolean isMagic;
+-->

@@ -5,6 +5,25 @@ public class DomainController {
     
     }
     
+    PlayerCharacter[] players = createTemplatePlayers();
+    Enemy[] enemies = createTemplateEnemies(3);
+    
+    ///  --- Debug --- ///
+    private PlayerParty party  = new PlayerParty(players[0], players[1], players[2], players[3]);
+    private EnemyGroup enemyGroup = new EnemyGroup(enemies);
+    
+    /// ---- Getters ---- ////
+    public PlayerParty getParty() {
+        return party;
+    }
+    
+    public EnemyGroup getEnemyGroup() {
+        return enemyGroup;
+    }
+    
+    
+    
+    ///  ---- Debug Methods ---- ///
     public PlayerCharacter[] createTemplatePlayers() {
         PlayerCharacter[] players = new PlayerCharacter[4];
         

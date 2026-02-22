@@ -1,9 +1,13 @@
 package domain;
 
+import java.util.ArrayList;
+
 public class Enemy extends Combatant{
     private final String enemyType;
         
     private static final String DEFAULT_CLASS = "Monster";
+    
+    private final ArrayList<String> attackList = new ArrayList<>();
         
         
     // -- Constructors -- //
