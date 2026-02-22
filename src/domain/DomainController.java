@@ -1,5 +1,7 @@
 package domain;
 
+import persistance.AttackRepository;
+
 public class DomainController {
     public DomainController() {
     
