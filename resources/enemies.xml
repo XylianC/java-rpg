@@ -1,10 +1,21 @@
 <enemies>
     <enemy>
-        <code>slime_green</code>
-        <name>Green Slime</name>
-        <type>Blobs</type>
+        <code>slime_normal</code>
+        <race>Slime</race>
+        <element>Normal</element>
         <baseSTR>1</baseSTR>
         <baseINTEL>0</baseINTEL>
+        <baseHP>10</baseHP>
+        <attacklist>
+            <possibleAttack>melee_attack</possibleAttack>
+        </attacklist>
+    </enemy>
+    <enemy>
+        <code>slime_fire</code>
+        <race>Fire Slime</race>
+        <element>Fire</element>
+        <baseSTR>1</baseSTR>
+        <baseINTEL>1</baseINTEL>
         <baseHP>10</baseHP>
         <attacklist>
             <possibleAttack>melee_attack</possibleAttack>
@@ -12,41 +23,53 @@
         </attacklist>
     </enemy>
     <enemy>
-        <code>slime_red</code>
-        <name>Red Slime</name>
-        <type>Blobs</type>
-        <baseSTR>2</baseSTR>
+        <code>slime_ice</code>
+        <race>Icy Slime</race>
+        <element>Ice</element>
+        <baseSTR>1</baseSTR>
         <baseINTEL>1</baseINTEL>
-        <baseHP>20</baseHP>
+        <baseHP>10</baseHP>
         <attacklist>
             <possibleAttack>melee_attack</possibleAttack>
-            <possibleAttack>fire_bolt</possibleAttack>
-        </attacklist>
-    </enemy>
-    <enemy>
-        <code>slime_blue</code>
-        <name>Blue Slime</name>
-        <type>Blobs</type>
-        <baseSTR>3</baseSTR>
-        <baseINTEL>2</baseINTEL>
-        <baseHP>30</baseHP>
-        <attacklist>
-            <possibleAttack>melee_attack</possibleAttack>
-            <possibleAttack>fire_bolt</possibleAttack>
+            <possibleAttack>ice_bolt</possibleAttack>
         </attacklist>
     </enemy>
     <enemy>
         <code>dragon_fire</code>
-        <name>Fire Dragon</name>
-        <type>LizardLikes</type>
+        <race>Dragon</race>
+        <element>Fire</element>
         <baseSTR>5</baseSTR>
-        <baseINTEL>3</baseINTEL>
+        <baseINTEL>6</baseINTEL>
         <baseHP>70</baseHP>
         <attacklist>
             <possibleAttack>melee_attack</possibleAttack>
             <possibleAttack>fire_bolt</possibleAttack>
             <possibleAttack>lightning_bolt</possibleAttack>
             <possibleAttack>ice_bolt</possibleAttack>
+        </attacklist>
+    </enemy>
+    <enemy>
+        <code>dragon_ice</code>
+        <race>Dragon</race>
+        <element>Ice</element>
+        <baseSTR>5</baseSTR>
+        <baseINTEL>6</baseINTEL>
+        <baseHP>70</baseHP>
+        <attacklist>
+            <possibleAttack>melee_attack</possibleAttack>
+            <possibleAttack>ice_bolt</possibleAttack>
+        </attacklist>
+    </enemy>
+    <enemy>
+        <code>dragon_electric</code>
+        <race>Dragon</race>
+        <element>Electric</element>
+        <baseSTR>5</baseSTR>
+        <baseINTEL>6</baseINTEL>
+        <baseHP>70</baseHP>
+        <attacklist>
+            <possibleAttack>melee_attack</possibleAttack>
+            <possibleAttack>lightning_bolt</possibleAttack>
         </attacklist>
     </enemy>
 </enemies>

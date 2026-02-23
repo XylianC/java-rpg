@@ -25,6 +25,12 @@ public class EnemyRepository {
         return enemies.get(enemy_code);
     }
     
+    public Enemy spawnEnemy(String enemy_code, int areaLevel) {
+        
+        Enemy enemyToSpawn = getEnemy(enemy_code);
+        
+    }
+    
     public void loadEnemies() throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
@@ -48,14 +54,15 @@ public class EnemyRepository {
             }
             
             String code = enemyElement.getElementsByTagName("code").item(0).getTextContent();
-            String name = enemyElement.getElementsByTagName("name").item(0).getTextContent();
-            String type = enemyElement.getElementsByTagName("type").item(0).getTextContent();
+            String race = enemyElement.getElementsByTagName("race").item(0).getTextContent();
+            String element = enemyElement.getElementsByTagName("element").item(0).getTextContent();
             int baseSTR = Integer.parseInt(enemyElement.getElementsByTagName("baseSTR").item(0).getTextContent());
             int baseINTEL = Integer.parseInt(enemyElement.getElementsByTagName("baseINTEL").item(0).getTextContent());
             int baseHP = Integer.parseInt(enemyElement.getElementsByTagName("baseHP").item(0).getTextContent());
             
-            Enemy enemyToAdd = new Enemy(code, name, type, baseSTR, baseINTEL, baseHP, possibleAttacks);
+            Enemy enemyToAdd = new Enemy(code, race, element, baseSTR, baseINTEL, baseHP, possibleAttacks);
             enemies.put(code, enemyToAdd);
         }
+        
     }
 }
