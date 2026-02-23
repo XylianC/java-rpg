@@ -11,7 +11,7 @@ public class PlayerCharacter extends Combatant{
     
     // -- Constructors -- //
     public PlayerCharacter(String name, String job, int lvl, int str, int intel, int hp, int maxhp) {
-        super(name, lvl, str, intel, hp, maxhp);
+        super(name, lvl, str, intel, hp);
         checkJob(job);
         this.charClass = job;
     }

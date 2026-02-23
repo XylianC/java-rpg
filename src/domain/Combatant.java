@@ -8,8 +8,13 @@ public abstract class Combatant {
     
     private int level;
     
+    private final int baseSTR;
+    private final int baseINTEL;
+    private final int baseHp;
+    
     private int strength;
     private int intelligence;
+    
     
     private int hp;
     private int maxHP;
@@ -19,16 +24,20 @@ public abstract class Combatant {
     
     
     // -- Constructors -- //
-    public Combatant(String name, int lvl, int str, int intel, int hp, int maxhp) {
+    public Combatant(String name, int lvl, int str, int intel, int hp) {
         checkName(name);
         this.name = name;
         
         setLevel(lvl);
-        setStrength(str);
-        setIntelligence(intel);
+        this.baseSTR = str;
+        this.baseINTEL = intel;
+        this.baseHp = hp;
         
-        setHp(hp);
-        setMaxHP(maxhp);
+        setStrength(calculateStats(baseSTR));
+        setIntelligence(calculateStats(baseINTEL));
+        
+        setMaxHP(calculateStats(baseHp));
+        setHp(getMaxHP());
     }
     
     public Combatant(String name, int lvl, int str, int intel) {
@@ -36,11 +45,15 @@ public abstract class Combatant {
         this.name = name;
         
         setLevel(lvl);
-        setStrength(str);
-        setIntelligence(intel);
+        this.baseSTR = str;
+        this.baseINTEL = intel;
+        this.baseHp = DEFAULT_HP;
         
-        setHp(DEFAULT_HP);
-        setMaxHP(DEFAULT_HP);
+        setStrength(calculateStats(baseSTR));
+        setIntelligence(calculateStats(baseINTEL));
+        
+        setMaxHP(calculateStats(baseHp));
+        setHp(getMaxHP());
     }
     
     public Combatant(String name) {
@@ -48,11 +61,15 @@ public abstract class Combatant {
         this.name = name;
         
         setLevel(DEFAULT_SKILL_LEVEL);
-        setStrength(DEFAULT_SKILL_LEVEL);
-        setIntelligence(DEFAULT_SKILL_LEVEL);
+        this.baseSTR = DEFAULT_SKILL_LEVEL;
+        this.baseINTEL = DEFAULT_SKILL_LEVEL;
+        this.baseHp = DEFAULT_HP;
         
-        setHp(DEFAULT_HP);
-        setMaxHP(DEFAULT_HP);
+        setStrength(calculateStats(baseSTR));
+        setIntelligence(calculateStats(baseINTEL));
+        
+        setMaxHP(calculateStats(baseHp));
+        setHp(getMaxHP());
     }
     
     // -- Getters -- //
@@ -111,6 +128,11 @@ public abstract class Combatant {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Combatant name can not be empty or null");
         }
+    }
+    
+    public int calculateStats(int baseAmount) {
+        int statAmount = baseAmount + level;
+        return statAmount;
     }
 }
 

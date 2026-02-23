@@ -12,17 +12,24 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AttackRepository {
     private HashMap<String, Attack> attacks = new HashMap<>();
     
+    public AttackRepository() throws ParserConfigurationException, IOException, SAXException {
+        loadAttacks();
+    }
+    
+    public Attack getAttack(String attackcode) {
+        return attacks.get(attackcode);
+    }
+    
     public void loadAttacks() throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
     
-        Document doc = db.parse(getClass().getResourceAsStream("attacks.xml"));
+        Document doc = db.parse(getClass().getResourceAsStream("/attacks.xml"));
         
         NodeList attackNodes = doc.getElementsByTagName("attack");
         

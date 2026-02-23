@@ -1,5 +1,13 @@
 <attacks>
     <attack>
+        <code>melee_attack</code>
+        <name>Melee Attack</name>
+        <element>None</element>
+        <baseDMG>5</baseDMG>
+        <baseACC>65</baseACC>
+        <isMagic>false</isMagic>
+    </attack>
+    <attack>
         <code>fire_bolt</code>
         <name>Fire Bolt</name>
         <element>Fire</element>

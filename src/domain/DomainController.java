@@ -1,18 +1,30 @@
 package domain;
 
+import org.xml.sax.SAXException;
 import persistance.AttackRepository;
+import persistance.EnemyRepository;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 
 public class DomainController {
-    public DomainController() {
+    private final EnemyRepository enemyRepo;
+    private final PlayerParty party;
+    private final EnemyGroup enemyGroup;
+
     
+    public DomainController() throws ParserConfigurationException, IOException, SAXException {
+        this.enemyRepo = new EnemyRepository();
+        
+        PlayerCharacter[] players = createTemplatePlayers();
+        this.party  = new PlayerParty(players[0], players[1], players[2], players[3]);
+        
+        Enemy[] enemies = createTemplateEnemies();
+        this.enemyGroup = new EnemyGroup(enemies);
+        
+        
     }
     
-    PlayerCharacter[] players = createTemplatePlayers();
-    Enemy[] enemies = createTemplateEnemies(3);
-    
-    ///  --- Debug --- ///
-    private PlayerParty party  = new PlayerParty(players[0], players[1], players[2], players[3]);
-    private EnemyGroup enemyGroup = new EnemyGroup(enemies);
     
     /// ---- Getters ---- ////
     public PlayerParty getParty() {
@@ -37,12 +49,12 @@ public class DomainController {
         return players;
     }
     
-    public Enemy[] createTemplateEnemies(int amount) {
-        Enemy[] enemies = new Enemy[amount];
-        
-        enemies[0] = new Enemy("Green Slime", "Slimes", 8, 10, 2);
-        enemies[1] = new Enemy("Red Slime", "Slimes");
-        enemies[2] = new Enemy("Fire Dragon", "Lizardlikes");
+    public Enemy[] createTemplateEnemies() {
+        assert enemyRepo != null;
+        Enemy[] enemies = new Enemy[3];
+        enemies[0] = enemyRepo.getEnemy("slime_green");
+        enemies[1] = enemyRepo.getEnemy("slime_red");
+        enemies[2] = enemyRepo.getEnemy("dragon_fire");
         
         return enemies;
     }
