@@ -24,7 +24,7 @@ public abstract class Combatant {
     
     
     // -- Constructors -- //
-    public Combatant(String name, int lvl, int str, int intel, int hp) {
+    public Combatant(String name, int str, int intel, int hp, int lvl) {
         checkName(name);
         this.name = name;
         
@@ -36,25 +36,26 @@ public abstract class Combatant {
         setStrength(calculateStats(baseSTR));
         setIntelligence(calculateStats(baseINTEL));
         
-        setMaxHP(calculateStats(baseHp));
+        setMaxHP(calculateHealth(baseHp));
         setHp(getMaxHP());
     }
     
-    public Combatant(String name, int lvl, int str, int intel) {
+    public Combatant(String name, int str, int intel, int hp) {
         checkName(name);
         this.name = name;
         
-        setLevel(lvl);
+        setLevel(DEFAULT_SKILL_LEVEL);
         this.baseSTR = str;
         this.baseINTEL = intel;
-        this.baseHp = DEFAULT_HP;
+        this.baseHp = hp;
         
         setStrength(calculateStats(baseSTR));
         setIntelligence(calculateStats(baseINTEL));
         
-        setMaxHP(calculateStats(baseHp));
+        setMaxHP(calculateHealth(baseHp));
         setHp(getMaxHP());
     }
+    
     
     public Combatant(String name) {
         checkName(name);
@@ -68,7 +69,7 @@ public abstract class Combatant {
         setStrength(calculateStats(baseSTR));
         setIntelligence(calculateStats(baseINTEL));
         
-        setMaxHP(calculateStats(baseHp));
+        setMaxHP(calculateHealth(baseHp));
         setHp(getMaxHP());
     }
     
@@ -132,6 +133,11 @@ public abstract class Combatant {
     
     public int calculateStats(int baseAmount) {
         int statAmount = baseAmount + level;
+        return statAmount;
+    }
+    
+    private int calculateHealth(int baseAmount) {
+        int statAmount = baseHp + (level * 15);
         return statAmount;
     }
 }

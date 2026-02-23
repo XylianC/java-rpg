@@ -3,9 +3,13 @@ package cui;
 import domain.*;
 
 public class rpgApplication {
+    BattleScene battleScene;
+    
     public rpgApplication(DomainController dc){
-        System.out.printf(dc.getParty().toString());
-        System.out.printf("%n%n");
-        System.out.printf(dc.getEnemyGroup().toString());
+        
+        BattleManager battleMan = new BattleManager(dc.getParty(), dc.getEnemyGroup());
+        battleScene = new BattleScene(battleMan);
+        
+        battleScene.drawFightScene();
     }
 }

@@ -12,6 +12,18 @@ public class Enemy extends Combatant{
         
         
     // -- Constructors -- //
+    public Enemy(String enemyCode, String enemyName, String enemyType, int enemyStr, int enemyIntel, int enemyHp, ArrayList<String> attacks, int enemyLvl) {
+        super(enemyName, enemyStr, enemyIntel, enemyHp, enemyLvl);
+        
+        checkString(enemyCode);
+        this.enemyCode = enemyCode;
+        
+        checkString(enemyType);
+        this.enemyType = enemyType;
+        
+        this.attackList = attacks;
+    }
+    
     public Enemy(String enemyCode, String enemyName, String enemyType, int enemyStr, int enemyIntel, int enemyHp, ArrayList<String> attacks) {
         super(enemyName, enemyStr, enemyIntel, enemyHp);
         
@@ -73,6 +85,6 @@ public class Enemy extends Combatant{
     
     @Override
     public String toString() {
-        return String.format("Enemy: %s Type: %s %n- Health: %d / %d %n- Stats: LVL: %d, STR: %d, INT: %d ", getName(), getEnemyType(), getHp(), getMaxHP(), getLevel(), getStrength(), getIntelligence());
+        return String.format("Enemy: %s%nType: %s %n- Health: %d / %d %n- Stats: LVL: %d, STR: %d, INT: %d ", getName(), getEnemyType(), getHp(), getMaxHP(), getLevel(), getStrength(), getIntelligence());
     }
 }

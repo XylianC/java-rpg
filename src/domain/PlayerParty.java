@@ -13,6 +13,9 @@ public class PlayerParty {
     }
     
     // -- Getters -- //
+    public PlayerCharacter getPlayerBySlot(int slot) {
+        return players[slot];
+    }
     
     // -- Setters -- //
     

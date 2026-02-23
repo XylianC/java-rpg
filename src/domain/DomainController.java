@@ -6,6 +6,7 @@ import persistance.EnemyRepository;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class DomainController {
     private final EnemyRepository enemyRepo;
@@ -19,9 +20,8 @@ public class DomainController {
         PlayerCharacter[] players = createTemplatePlayers();
         this.party  = new PlayerParty(players[0], players[1], players[2], players[3]);
         
-        Enemy[] enemies = createTemplateEnemies();
+        ArrayList<Enemy> enemies = createTemplateEnemies();
         this.enemyGroup = new EnemyGroup(enemies);
-        
         
     }
     
@@ -49,12 +49,13 @@ public class DomainController {
         return players;
     }
     
-    public Enemy[] createTemplateEnemies() {
+    public ArrayList<Enemy> createTemplateEnemies() {
         assert enemyRepo != null;
-        Enemy[] enemies = new Enemy[3];
-        enemies[0] = enemyRepo.getEnemy("slime_green");
-        enemies[1] = enemyRepo.getEnemy("slime_red");
-        enemies[2] = enemyRepo.getEnemy("dragon_fire");
+        ArrayList<Enemy> enemies = new ArrayList<>();
+        enemies.add(enemyRepo.getEnemy("slime_green"));
+        enemies.add(enemyRepo.getEnemy("slime_red"));
+        enemies.add(enemyRepo.getEnemy("dragon_fire"));
+        enemies.add(enemyRepo.getEnemy("slime_blue"));
         
         return enemies;
     }

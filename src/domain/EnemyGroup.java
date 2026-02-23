@@ -4,13 +4,11 @@ import java.util.ArrayList;
 
 public class EnemyGroup {
     // ------ Attributes ------ //
-    private final ArrayList<Enemy> enemies = new ArrayList<>();
+    private ArrayList<Enemy> enemies = new ArrayList<>();
     
     // ------ Constructors ------ //
-    public EnemyGroup(Enemy[] enemies) {
-        for (Enemy enemy : enemies) {
-            addEnemy(enemy);
-        }
+    public EnemyGroup(ArrayList<Enemy> enemies) {
+        this.enemies = enemies;
     }
     
     // ------ Getters ------ //
@@ -24,6 +22,16 @@ public class EnemyGroup {
     
     public void removeEnemy(int slot) {
         enemies.remove(slot);
+    }
+    
+    public ArrayList<Enemy> getEnemiesAlive() {
+        ArrayList<Enemy> enemiesAlive = new ArrayList<>();
+        for (Enemy enemy : enemies) {
+            if (enemy.getHp() > 0) {
+                enemiesAlive.add(enemy);
+            }
+        }
+        return enemiesAlive;
     }
     
     @Override
