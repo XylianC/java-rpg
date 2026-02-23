@@ -2,6 +2,8 @@ package cui;
 
 import domain.BattleManager;
 import domain.Enemy;
+import domain.PlayerCharacter;
+import domain.PlayerParty;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -22,13 +24,61 @@ public class BattleScene {
     }
     
     public void doBattleCycle() {
-        playerTurn();
+        doPlayerTurn();
         enemyTurn();
+    }
+    
+    public void doPlayerTurn() {
+        System.out.printf("Player turn%n----------%n");
+        
+        printEnemiesAlive();
+        
+        for (int i = 0; i < battleMan.getPartySize(); i++) {
+            PlayerCharacter activeCharacter = battleMan.getCharacterInfo(i);
+            
+            System.out.printf("----------%nWhat would %s like to do:%n", activeCharacter.getName());
+            System.out.println("1: Attack");
+            System.out.println("2: Magic");
+            System.out.println("3: Defend");
+            System.out.println("4: Flee");
+            
+            int input = scanner.nextInt();
+            characterTurn(input, activeCharacter);
+        }
+        
         
     }
     
-    public void playerTurn() {
-        System.out.printf("Player turn%n----------%n");
+    public void characterTurn(int choice, PlayerCharacter activeChar) {
+           switch(choice) {
+               case 1 -> {
+                   System.out.printf("%s chose to attack%n", activeChar.getName());
+                   System.out.println("Which target would you like to attack?");
+                   printEnemiesAlive();
+                   int input = scanner.nextInt();
+                   
+                   Enemy target = battleMan.getAliveEnemies().get(input - 1);
+                   battleMan.doPlayerAttack(target, activeChar);
+                   
+               }
+               case 2 -> {
+                   System.out.println("You chose to do magic");
+               }
+               case 3 -> {
+                   System.out.println("You chose to defend");
+               }
+               case 4 -> {
+                   System.out.println("You chose to flee");
+                   
+               }
+           }
+    }
+    
+    public void enemyTurn () {
+        System.out.println("Does nothing yet");
+    }
+    
+    public void printEnemiesAlive() {
         System.out.println("Currently: These enemies are in the fight:");
         
         ArrayList<Enemy> enemiesThisTurn = battleMan.getAliveEnemies();
@@ -38,20 +88,7 @@ public class BattleScene {
             System.out.println();
         }
         
-        System.out.printf("----------%nWhat would you like to do:%n");
-        System.out.println("1: Attack");
-        System.out.println("2: Magic");
-        System.out.println("3: Defend");
-        System.out.println("4: Flee");
-        
-        int input = scanner.nextInt();
-        battleMan.doBattleTurn(input);
     }
-    
-    public void enemyTurn () {
-        System.out.println("Does nothing yet");
-    }
-    
     
 }
 

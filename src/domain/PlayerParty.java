@@ -17,6 +17,10 @@ public class PlayerParty {
         return players[slot];
     }
     
+    public int getPartySize() {
+        return this.players.length;
+    }
+    
     // -- Setters -- //
     
     // -- Andere Methoden -- //
@@ -30,7 +34,6 @@ public class PlayerParty {
             strB.append("Slot ").append(i + 1).append(": ");
             strB.append(players[i].toString());
             strB.append("\n");
-            
         }
         
         return strB.toString();

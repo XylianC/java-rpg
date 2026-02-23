@@ -15,12 +15,15 @@ public abstract class Combatant {
     private int strength;
     private int intelligence;
     
-    
     private int hp;
     private int maxHP;
     
+    private boolean isAlive = true;
+    
     private static final int DEFAULT_HP = 100;
     private static final int DEFAULT_SKILL_LEVEL = 1;
+    
+    private static final int MINIMUM_ACC_FOR_SUCCES = 100;
     
     
     // -- Constructors -- //
@@ -36,7 +39,7 @@ public abstract class Combatant {
         setStrength(calculateStats(baseSTR));
         setIntelligence(calculateStats(baseINTEL));
         
-        setMaxHP(calculateHealth(baseHp));
+        setMaxHP(calculateHealth());
         setHp(getMaxHP());
     }
     
@@ -52,7 +55,7 @@ public abstract class Combatant {
         setStrength(calculateStats(baseSTR));
         setIntelligence(calculateStats(baseINTEL));
         
-        setMaxHP(calculateHealth(baseHp));
+        setMaxHP(calculateHealth());
         setHp(getMaxHP());
     }
     
@@ -69,7 +72,7 @@ public abstract class Combatant {
         setStrength(calculateStats(baseSTR));
         setIntelligence(calculateStats(baseINTEL));
         
-        setMaxHP(calculateHealth(baseHp));
+        setMaxHP(calculateHealth());
         setHp(getMaxHP());
     }
     
@@ -98,6 +101,8 @@ public abstract class Combatant {
         return maxHP;
     }
     
+    public boolean isAlive() {return isAlive;}
+    
     // ---- Setters ---- //
     
     public void setLevel(int lvl) {
@@ -125,6 +130,34 @@ public abstract class Combatant {
     }
     
     // -- Class Specific Methods  -- //
+    public boolean attemptAttack(Combatant target, Attack attemptedAttack) {
+        //todo: attack logic comes here
+        boolean succes = false;
+        
+        if ((attemptedAttack.getBaseAccuracy() * level) >= MINIMUM_ACC_FOR_SUCCES) {
+            doAttack(target, attemptedAttack);
+            succes = true;
+        }
+        
+        return succes;
+    }
+    
+    public void doAttack(Combatant target, Attack attackToDo) {
+        //todo: attack logic comes here
+        int damage = attackToDo.getBaseDamage() * strength;
+        target.takeDamage(damage);
+        
+        System.out.printf("%n%s hits %s for %d damage%n", this.getName(), target.getName(), damage);
+    }
+    
+    public void takeDamage(int amount) {
+        hp -= amount;
+        if (hp < 0) {
+            this.isAlive = false;
+        }
+    }
+    
+    
     private void checkName(String name) {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Combatant name can not be empty or null");
@@ -136,7 +169,7 @@ public abstract class Combatant {
         return statAmount;
     }
     
-    private int calculateHealth(int baseAmount) {
+    private int calculateHealth() {
         int statAmount = baseHp + (level * 15);
         return statAmount;
     }

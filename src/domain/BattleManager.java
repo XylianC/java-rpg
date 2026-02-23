@@ -1,5 +1,10 @@
 package domain;
 
+import org.xml.sax.SAXException;
+import persistance.AttackRepository;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class BattleManager {
@@ -11,11 +16,13 @@ public class BattleManager {
     
     private final PlayerParty playerParty;
     private final EnemyGroup enemyGroup;
+    private final AttackRepository attacks;
     
     // ------ Constructors ------ //
-    public BattleManager(PlayerParty players, EnemyGroup enemies) {
+    public BattleManager(PlayerParty players, EnemyGroup enemies) throws ParserConfigurationException, IOException, SAXException {
         this.playerParty = players;
         this.enemyGroup = enemies;
+        attacks = new AttackRepository();
     }
     
     // ------ Getters ------ //
@@ -35,21 +42,18 @@ public class BattleManager {
         return enemyGroup.getEnemiesAlive();
     }
     
+    public PlayerCharacter getCharacterInfo(int slot) {
+        return this.playerParty.getPlayerBySlot(slot);
+    }
     
+    public int getPartySize() {
+        return this.playerParty.getPartySize();
+    }
 
     
     // ------ Class Methods ------ //
-    public void doBattleTurn(int input) {
-        doPlayerTurn(input);
-        doEnemyTurn();
-        battleTurn++;
-        this.battleActive = areEnemiesAlive() && !this.playerFled;
-    }
-    
     
     ///  ---- General methods ---- ///
-    
-    
     public void finishBattle() {
         if(!this.playerFled) {
             System.out.println("Battle is over");
@@ -66,36 +70,36 @@ public class BattleManager {
     
     ///  ----- Enemy Turn ------ ///
     private void doEnemyTurn() {
-        
+        System.out.println("THIS IS THE ENEMY TURN - DEBUG TEXT");
         
         isPlayerTurn = true;
     }
     
     ///  ----- Player Turn ------ ///
     
-    public void doPlayerTurn(int input) {
-        switch (input) {
-            case 1 -> doPlayerAttack();
-            case 2 -> doPlayerMagic();
-            case 3 -> doPlayerDefend();
-            case 4 -> doPlayerFlee();
-        }
-        isPlayerTurn = false;
+//    public void doPlayerTurn(int input) {
+//        switch (input) {
+//            //case 1 -> doPlayerAttack();
+//            case 2 -> doPlayerMagic();
+//            case 3 -> doPlayerDefend();
+//            case 4 -> doPlayerFlee();
+//        }
+//        isPlayerTurn = false;
+//    }
+    
+    public void doPlayerAttack(Combatant target, PlayerCharacter activeCharacter) {
+        activeCharacter.doAttack(target, attacks.getAttack("melee_attack"));
     }
     
-    private void doPlayerAttack() {
-        System.out.println("You chose to attack");
-    }
-    
-    private void doPlayerMagic() {
+    public void doPlayerMagic() {
         System.out.println("You chose to use a spell");
     }
     
-    private void doPlayerDefend() {
+    public void doPlayerDefend() {
         System.out.println("You chose to defend");
     }
     
-    private void doPlayerFlee() {
+    public void doPlayerFlee() {
         playerFled = true;
         System.out.println("You chose to flee");
     }
