@@ -6,17 +6,19 @@
         <baseSTR>1</baseSTR>
         <baseINTEL>0</baseINTEL>
         <baseHP>10</baseHP>
+        <baseMP>5</baseMP>
         <attacklist>
             <possibleAttack>melee_attack</possibleAttack>
         </attacklist>
     </enemy>
     <enemy>
         <code>slime_fire</code>
-        <race>Fire Slime</race>
+        <race>Slime</race>
         <element>Fire</element>
         <baseSTR>1</baseSTR>
         <baseINTEL>1</baseINTEL>
         <baseHP>10</baseHP>
+        <baseMP>10</baseMP>
         <attacklist>
             <possibleAttack>melee_attack</possibleAttack>
             <possibleAttack>fire_bolt</possibleAttack>
@@ -29,6 +31,7 @@
         <baseSTR>1</baseSTR>
         <baseINTEL>1</baseINTEL>
         <baseHP>10</baseHP>
+        <baseMP>10</baseMP>
         <attacklist>
             <possibleAttack>melee_attack</possibleAttack>
             <possibleAttack>ice_bolt</possibleAttack>
@@ -41,6 +44,7 @@
         <baseSTR>5</baseSTR>
         <baseINTEL>6</baseINTEL>
         <baseHP>70</baseHP>
+        <baseMP>30</baseMP>
         <attacklist>
             <possibleAttack>melee_attack</possibleAttack>
             <possibleAttack>fire_bolt</possibleAttack>
@@ -55,6 +59,7 @@
         <baseSTR>5</baseSTR>
         <baseINTEL>6</baseINTEL>
         <baseHP>70</baseHP>
+        <baseMP>30</baseMP>
         <attacklist>
             <possibleAttack>melee_attack</possibleAttack>
             <possibleAttack>ice_bolt</possibleAttack>
@@ -67,6 +72,7 @@
         <baseSTR>5</baseSTR>
         <baseINTEL>6</baseINTEL>
         <baseHP>70</baseHP>
+        <baseMP>30</baseMP>
         <attacklist>
             <possibleAttack>melee_attack</possibleAttack>
             <possibleAttack>lightning_bolt</possibleAttack>

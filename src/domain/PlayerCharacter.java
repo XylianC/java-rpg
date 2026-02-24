@@ -10,7 +10,7 @@ public class PlayerCharacter extends Combatant{
     private static final String DEFAULT_CLASS = "Mage";
     
     // -- Constructors -- //
-    public PlayerCharacter(String name, String job, int lvl, int str, int intel, int hp, int maxhp) {
+    public PlayerCharacter(String name, String job, int lvl, int str, int intel, int hp, int mp) {
         super(name, lvl, str, intel, hp);
         checkJob(job);
         this.charClass = job;

@@ -4,6 +4,7 @@ public enum Elements {
     NORMAL("Normal", "None"),
     FIRE("Fire", "Water"),
     ICE("Ice", "Fire"),
+    ELECTRIC("Electric", "Ice"),
     DARK("Dark", "Light"),
     LIGHT("Light", "Dark");
     

@@ -8,16 +8,18 @@ public class Attack {
     private final int baseDamage;
     private final int baseAccuracy;
     private final boolean isMagic;
+    private final int cost;
     
     
     private static final boolean DEFAULT_NOMAGIC = false;
+    private static final int DEFAULT_COST = 0;
     private static final String DEFAULT_ELEMENT = "None";
     private static final int DEFAULT_BASE_DAMAGE = 1;
     private static final int DEFAULT_BASE_ACCURACY = 1;
     
     
     /// ------     Constructors     ------  ///
-    public Attack(String attackCode, String attackName, String element, int baseDamage, int baseAccuracy, boolean isMagic) {
+    public Attack(String attackCode, String attackName, String element, int baseDamage, int baseAccuracy, boolean isMagic, int cost) {
         checkStringInput(attackCode);
         this.attackCode = attackCode;
 
@@ -29,6 +31,8 @@ public class Attack {
         
         this.element = element;
         this.isMagic = isMagic;
+        
+        this.cost = cost;
     }
     
     public Attack(String attackCode, String attackName, int baseDamage, int baseAccuracy) {
@@ -42,6 +46,7 @@ public class Attack {
         
         this.element = DEFAULT_ELEMENT;
         this.isMagic = DEFAULT_NOMAGIC;
+        this.cost = DEFAULT_COST;
     }
     
     public Attack(String attackCode, String attackName) {
@@ -56,6 +61,7 @@ public class Attack {
         
         this.element = DEFAULT_ELEMENT;
         this.isMagic = DEFAULT_NOMAGIC;
+        this.cost = DEFAULT_COST;
     }
     
     /// ------      Getters     ------  ///

@@ -6,6 +6,7 @@
         <baseDMG>5</baseDMG>
         <baseACC>65</baseACC>
         <isMagic>false</isMagic>
+        <cost>0</cost>
     </attack>
     <attack>
         <code>fire_bolt</code>
@@ -14,6 +15,7 @@
         <baseDMG>10</baseDMG>
         <baseACC>80</baseACC>
         <isMagic>true</isMagic>
+        <cost>1</cost>
     </attack>
     <attack>
         <code>lightning_bolt</code>
@@ -22,6 +24,7 @@
         <baseDMG>10</baseDMG>
         <baseACC>80</baseACC>
         <isMagic>true</isMagic>
+        <cost>1</cost>
     </attack>
     <attack>
         <code>ice_bolt</code>
@@ -30,6 +33,7 @@
         <baseDMG>10</baseDMG>
         <baseACC>80</baseACC>
         <isMagic>true</isMagic>
+        <cost>1</cost>
     </attack>
 </attacks>
 

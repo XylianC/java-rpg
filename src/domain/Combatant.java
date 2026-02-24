@@ -10,10 +10,15 @@ public abstract class Combatant {
     
     private final int baseSTR;
     private final int baseINTEL;
+    
     private final int baseHp;
+    private final int baseMp;
     
     private int strength;
     private int intelligence;
+    
+    private int mp;
+    private int maxMp;
     
     private int hp;
     private int maxHP;
@@ -21,13 +26,14 @@ public abstract class Combatant {
     private boolean isAlive = true;
     
     private static final int DEFAULT_HP = 100;
+    private static final int DEFAULT_MP = 10;
     private static final int DEFAULT_SKILL_LEVEL = 1;
     
     private static final int MINIMUM_ACC_FOR_SUCCES = 100;
     
     
     // -- Constructors -- //
-    public Combatant(String name, int str, int intel, int hp, int lvl) {
+    public Combatant(String name, int str, int intel, int hp, int mp, int lvl) {
         checkName(name);
         this.name = name;
         
@@ -35,15 +41,20 @@ public abstract class Combatant {
         this.baseSTR = str;
         this.baseINTEL = intel;
         this.baseHp = hp;
+        this.baseMp = mp;
+        
         
         setStrength(calculateStats(baseSTR));
         setIntelligence(calculateStats(baseINTEL));
+        
+        setMaxMP(calculateMagic());
+        setMp(getMaxMp());
         
         setMaxHP(calculateHealth());
         setHp(getMaxHP());
     }
     
-    public Combatant(String name, int str, int intel, int hp) {
+    public Combatant(String name, int str, int intel, int hp, int mp) {
         checkName(name);
         this.name = name;
         
@@ -51,9 +62,33 @@ public abstract class Combatant {
         this.baseSTR = str;
         this.baseINTEL = intel;
         this.baseHp = hp;
+        this.baseMp = mp;
         
         setStrength(calculateStats(baseSTR));
         setIntelligence(calculateStats(baseINTEL));
+        
+        setMaxMP(calculateMagic());
+        setMp(getMaxMp());
+        
+        setMaxHP(calculateHealth());
+        setHp(getMaxHP());
+    }
+    
+    public Combatant(String name, int lvl, int str, int intel) {
+        checkName(name);
+        this.name = name;
+        
+        setLevel(lvl);
+        this.baseSTR = str;
+        this.baseINTEL = intel;
+        this.baseHp = DEFAULT_HP;
+        this.baseMp = DEFAULT_MP;
+        
+        setStrength(calculateStats(baseSTR));
+        setIntelligence(calculateStats(baseINTEL));
+        
+        setMaxMP(calculateMagic());
+        setMp(getMaxMp());
         
         setMaxHP(calculateHealth());
         setHp(getMaxHP());
@@ -68,9 +103,13 @@ public abstract class Combatant {
         this.baseSTR = DEFAULT_SKILL_LEVEL;
         this.baseINTEL = DEFAULT_SKILL_LEVEL;
         this.baseHp = DEFAULT_HP;
+        this.baseMp = DEFAULT_MP;
         
         setStrength(calculateStats(baseSTR));
         setIntelligence(calculateStats(baseINTEL));
+        
+        setMaxMP(calculateMagic());
+        setMp(getMaxMp());
         
         setMaxHP(calculateHealth());
         setHp(getMaxHP());
@@ -101,6 +140,10 @@ public abstract class Combatant {
         return maxHP;
     }
     
+    public int getMp() {return mp;}
+    
+    public int getMaxMp() {return maxMp;}
+    
     public boolean isAlive() {return isAlive;}
     
     // ---- Setters ---- //
@@ -127,6 +170,18 @@ public abstract class Combatant {
     
     public void setMaxHP(int maxHP) {
         this.maxHP = maxHP;
+    }
+    
+    public void setMp(int mp) {
+        if (mp >= 0) {
+            this.mp = mp;
+        } else {
+            throw new IllegalArgumentException("Character MP can not be below 0");
+        }
+    }
+    
+    public void setMaxMP(int maxMp) {
+        this.maxMp = maxMp;
     }
     
     // -- Class Specific Methods  -- //
@@ -172,6 +227,11 @@ public abstract class Combatant {
     private int calculateHealth() {
         int statAmount = baseHp + (level * 15);
         return statAmount;
+    }
+    
+    private int calculateMagic() {
+        int amount = baseMp + (level * intelligence);
+        return amount;
     }
 }
 

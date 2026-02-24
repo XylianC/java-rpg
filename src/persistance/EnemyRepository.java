@@ -28,7 +28,7 @@ public class EnemyRepository {
     public Enemy spawnEnemy(String enemy_code, int areaLevel) {
         
         Enemy enemyToSpawn = getEnemy(enemy_code);
-        
+        return enemyToSpawn;
     }
     
     public void loadEnemies() throws ParserConfigurationException, IOException, SAXException {
@@ -55,12 +55,14 @@ public class EnemyRepository {
             
             String code = enemyElement.getElementsByTagName("code").item(0).getTextContent();
             String race = enemyElement.getElementsByTagName("race").item(0).getTextContent();
-            String element = enemyElement.getElementsByTagName("element").item(0).getTextContent();
+            String elementToParse = enemyElement.getElementsByTagName("element").item(0).getTextContent();
+            Elements element = Elements.valueOf(elementToParse.toUpperCase());
             int baseSTR = Integer.parseInt(enemyElement.getElementsByTagName("baseSTR").item(0).getTextContent());
             int baseINTEL = Integer.parseInt(enemyElement.getElementsByTagName("baseINTEL").item(0).getTextContent());
             int baseHP = Integer.parseInt(enemyElement.getElementsByTagName("baseHP").item(0).getTextContent());
+            int baseMP = Integer.parseInt(enemyElement.getElementsByTagName("baseMP").item(0).getTextContent());
             
-            Enemy enemyToAdd = new Enemy(code, race, element, baseSTR, baseINTEL, baseHP, possibleAttacks);
+            Enemy enemyToAdd = new Enemy(code, race, element, baseSTR, baseINTEL, baseHP, baseMP, possibleAttacks);
             enemies.put(code, enemyToAdd);
         }
         

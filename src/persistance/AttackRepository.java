@@ -41,8 +41,9 @@ public class AttackRepository {
             int baseDMG = Integer.parseInt(attackElement.getElementsByTagName("baseDMG").item(0).getTextContent());
             int baseACC = Integer.parseInt(attackElement.getElementsByTagName("baseACC").item(0).getTextContent());
             boolean isMagic = Boolean.parseBoolean(attackElement.getElementsByTagName("isMagic").item(0).getTextContent());
-        
-            Attack atkToAdd = new Attack(code, name, element, baseDMG, baseACC, isMagic);
+            int cost = Integer.parseInt(attackElement.getElementsByTagName("cost").item(0).getTextContent());
+            
+            Attack atkToAdd = new Attack(code, name, element, baseDMG, baseACC, isMagic, cost);
             attacks.put(code, atkToAdd);
         }
     }

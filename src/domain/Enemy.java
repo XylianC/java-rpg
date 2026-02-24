@@ -14,8 +14,8 @@ public class Enemy extends Combatant{
     private ArrayList<String> attackList = new ArrayList<>();
     
     // -- Constructors -- //
-    public Enemy(String enemyCode, String enemyRace, Elements enemyElement, int enemyStr, int enemyIntel, int enemyHp, ArrayList<String> attacks, int enemyLvl) {
-        super(enemyRace, enemyStr, enemyIntel, enemyHp, enemyLvl);
+    public Enemy(String enemyCode, String enemyRace, Elements enemyElement, int enemyStr, int enemyIntel, int enemyHp, int enemyMp, ArrayList<String> attacks, int enemyLvl) {
+        super(enemyRace, enemyStr, enemyIntel, enemyHp, enemyMp, enemyLvl);
         
         checkString(enemyCode);
         this.enemyCode = enemyCode;
@@ -28,8 +28,8 @@ public class Enemy extends Combatant{
         this.attackList = attacks;
     }
     
-    public Enemy(String enemyCode, String enemyRace, Elements enemyElement, int enemyStr, int enemyIntel, int enemyHp, ArrayList<String> attacks) {
-        super(enemyRace, enemyStr, enemyIntel, enemyHp);
+    public Enemy(String enemyCode, String enemyRace, Elements enemyElement, int enemyStr, int enemyIntel, int enemyHp, int enemyMp, ArrayList<String> attacks) {
+        super(enemyRace, enemyStr, enemyIntel, enemyHp, enemyMp);
         
         checkString(enemyCode);
         this.enemyCode = enemyCode;
@@ -43,41 +43,19 @@ public class Enemy extends Combatant{
     }
     
     
-    public Enemy(String enemyCode, String enemyName, String enemyType, int enemyLvl, int enemyStr, int enemyIntel, int enemyHp) {
-        super(enemyName, enemyLvl, enemyStr, enemyIntel, enemyHp);
-       
-        checkString(enemyCode);
-        this.enemyCode = enemyCode;
-        
-        checkString(enemyType);
-        this.enemyRace = enemyType;
-    }
-    
-    public Enemy(String enemyCode,String enemyName, String enemyType, int enemyLvl, int enemyStr, int enemyIntel) {
-        super(enemyName, enemyLvl, enemyStr, enemyIntel);
-        
-        checkString(enemyCode);
-        this.enemyCode = enemyCode;
-        
-        checkString(enemyType);
-        this.enemyRace = enemyType;
-    }
-    
-    public Enemy(String enemyCode, String enemyName, String enemyType) {
-        super(enemyName);
-        
-        checkString(enemyCode);
-        this.enemyCode = enemyCode;
-        
-        checkString(enemyType);
-        this.enemyRace = enemyType;
-    }
     
     // -- Getters -- //
     public String getEnemyRace() {
-        return enemyRace;
+        return this.enemyRace;
     }
-        
+    
+    public Elements getEnemyElement() {return this.enemyElement;}
+    
+    public String getEnemyDisplayName() {
+        String output = getEnemyElement().getDisplayName() + " " + getEnemyRace();
+        return output;
+     }
+    
     // -- Andere Methoden -- //
     private void checkString(String type) {
         if(type == null || type.isBlank()) {
@@ -91,6 +69,6 @@ public class Enemy extends Combatant{
     
     @Override
     public String toString() {
-        return String.format("Enemy: %s%nType: %s %n- Health: %d / %d %n- Stats: LVL: %d, STR: %d, INT: %d ", getName(), getEnemyRace(), getHp(), getMaxHP(), getLevel(), getStrength(), getIntelligence());
+        return String.format("Enemy: %s%nType: %s %n- Health: %d / %d %nMP: %d/%d%n- Stats: LVL: %d, STR: %d, INT: %d ", getEnemyDisplayName(), getEnemyElement().getDisplayName(), getHp(), getMaxHP(), getMp(), getMaxMp(), getLevel(), getStrength(), getIntelligence());
     }
 }

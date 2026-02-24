@@ -52,10 +52,10 @@ public class DomainController {
     public ArrayList<Enemy> createTemplateEnemies() {
         assert enemyRepo != null;
         ArrayList<Enemy> enemies = new ArrayList<>();
-        enemies.add(enemyRepo.getEnemy("slime_green"));
-        enemies.add(enemyRepo.getEnemy("slime_red"));
+        enemies.add(enemyRepo.getEnemy("slime_normal"));
+        enemies.add(enemyRepo.getEnemy("slime_fire"));
         enemies.add(enemyRepo.getEnemy("dragon_fire"));
-        enemies.add(enemyRepo.getEnemy("slime_blue"));
+        enemies.add(enemyRepo.getEnemy("dragon_electric"));
         
         return enemies;
     }
