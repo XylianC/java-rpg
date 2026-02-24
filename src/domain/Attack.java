@@ -1,10 +1,12 @@
 package domain;
 
+import persistance.Elements;
+
 public class Attack {
     /// ------      Attributes     ------  ///
     private final String attackCode;
     private final String attackName;
-    private final String element;
+    private final Elements element;
     private final int baseDamage;
     private final int baseAccuracy;
     private final boolean isMagic;
@@ -13,13 +15,13 @@ public class Attack {
     
     private static final boolean DEFAULT_NOMAGIC = false;
     private static final int DEFAULT_COST = 0;
-    private static final String DEFAULT_ELEMENT = "None";
+    private static final Elements DEFAULT_ELEMENT = Elements.NORMAL;
     private static final int DEFAULT_BASE_DAMAGE = 1;
     private static final int DEFAULT_BASE_ACCURACY = 1;
     
     
     /// ------     Constructors     ------  ///
-    public Attack(String attackCode, String attackName, String element, int baseDamage, int baseAccuracy, boolean isMagic, int cost) {
+    public Attack(String attackCode, String attackName, Elements element, int baseDamage, int baseAccuracy, boolean isMagic, int cost) {
         checkStringInput(attackCode);
         this.attackCode = attackCode;
 
@@ -69,7 +71,7 @@ public class Attack {
         return attackName;
     }
     
-    public String getElement() {
+    public Elements getElement() {
         return element;
     }
     

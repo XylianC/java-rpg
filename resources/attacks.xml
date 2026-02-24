@@ -2,7 +2,7 @@
     <attack>
         <code>melee_attack</code>
         <name>Melee Attack</name>
-        <element>None</element>
+        <element>normal</element>
         <baseDMG>5</baseDMG>
         <baseACC>65</baseACC>
         <isMagic>false</isMagic>

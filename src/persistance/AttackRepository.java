@@ -37,7 +37,8 @@ public class AttackRepository {
             Element attackElement = (Element) attackNodes.item(i);
             String code = attackElement.getElementsByTagName("code").item(0).getTextContent();
             String name = attackElement.getElementsByTagName("name").item(0).getTextContent();
-            String element = attackElement.getElementsByTagName("element").item(0).getTextContent();
+            String elementToParse = attackElement.getElementsByTagName("element").item(0).getTextContent();
+            Elements element = Elements.valueOf(elementToParse.toUpperCase());
             int baseDMG = Integer.parseInt(attackElement.getElementsByTagName("baseDMG").item(0).getTextContent());
             int baseACC = Integer.parseInt(attackElement.getElementsByTagName("baseACC").item(0).getTextContent());
             boolean isMagic = Boolean.parseBoolean(attackElement.getElementsByTagName("isMagic").item(0).getTextContent());
