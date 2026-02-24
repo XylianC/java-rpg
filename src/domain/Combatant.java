@@ -249,7 +249,7 @@ public abstract class Combatant {
         if ((attemptedAttack.getBaseAccuracy() * level) >= MINIMUM_ACC_FOR_SUCCES) {
             return doAttack(target, attemptedAttack);
         } else {
-            return "The attack missed";
+            return String.format("%n%s attempts %s on %s.%nThe attack missed", this.getDisplayName(), attemptedAttack.getAttackName(), target.getDisplayName());
         }
         
     }
@@ -260,6 +260,7 @@ public abstract class Combatant {
         target.takeDamage(damage);
         
         if(attackToDo.isMagic()) {
+            this.mp -= attackToDo.getCost();
             return String.format("%n%s casts %s on %s for %d damage%n", this.getDisplayName(),attackToDo.getAttackName(), target.getDisplayName(), damage);
             
         } else {

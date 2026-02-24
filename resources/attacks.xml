@@ -36,12 +36,3 @@
         <cost>1</cost>
     </attack>
 </attacks>
-
-<!--
-    private final String attackCode;
-    private final String attackName;
-    private final String element;
-    private final int baseDamage;
-    private final int baseAccuracy;
-    private final boolean isMagic;
--->

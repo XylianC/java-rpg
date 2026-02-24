@@ -84,6 +84,8 @@ public class Attack {
     public int getBaseAccuracy() {
         return baseAccuracy;
     }
+    
+    public int getCost() { return cost;}
     /// ------      Setters     ------  ///
     
     /// ------   Class Methods   ------  ///
