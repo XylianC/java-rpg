@@ -82,17 +82,18 @@ public class BattleManager {
     }
     
     ///  ----- Enemy Turn ------ ///
-    public void doEnemyTurn() {
-        System.out.println("THIS IS THE ENEMY TURN - DEBUG TEXT");
-        
+    public String doEnemyTurn(Enemy activeEnemy) {
         ArrayList<PlayerCharacter> playersAlive = getPartyMembersAlive();
         
         int target = getRandom(playersAlive.size());
         PlayerCharacter playerTarget = playersAlive.get(target);
         
-        System.out.printf("ENEMY ATTEMPTS TO ATTACK: %s%n", playerTarget.getName());
+        ArrayList<String> possibleAttacks = activeEnemy.getAttackList();
+        int randomAttack = getRandom(possibleAttacks.size());
         
+        Attack attackToTry = attacks.getAttack(possibleAttacks.get(randomAttack));
         isPlayerTurn = true;
+        return activeEnemy.attemptAttack(playerTarget, attackToTry);
     }
     
     ///  ----- Player Turn ------ ///
@@ -107,12 +108,12 @@ public class BattleManager {
 //        isPlayerTurn = false;
 //    }
     
-    public void doPlayerAttack(Combatant target, PlayerCharacter activeCharacter) {
-        activeCharacter.doAttack(target, attacks.getAttack("melee_attack"));
+    public String doPlayerAttack(Combatant target, PlayerCharacter activeCharacter) {
+        return activeCharacter.doAttack(target, attacks.getAttack("melee_attack"));
     }
     
-    public void doPlayerMagic(Combatant target, Attack chosenSpell, PlayerCharacter activeCharacter) {
-        activeCharacter.doAttack(target, chosenSpell);
+    public String doPlayerMagic(Combatant target, Attack chosenSpell, PlayerCharacter activeCharacter) {
+        return activeCharacter.doAttack(target, chosenSpell);
     }
     
     public void doPlayerDefend() {

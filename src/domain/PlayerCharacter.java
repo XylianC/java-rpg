@@ -1,6 +1,6 @@
 package domain;
 
-import persistence.Classes;
+import util.Classes;
 
 import java.util.ArrayList;
 

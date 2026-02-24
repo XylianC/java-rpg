@@ -32,21 +32,22 @@ public class BattleScene {
         
         printEnemiesAlive();
         
-        for (int i = 0; i < battleMan.getPartySize(); i++) {
+        for (int i = 0; i < battleMan.getPartyMembersAlive().size(); i++) {
             if(battleMan.getBattleActive()) {
-                PlayerCharacter activeCharacter = battleMan.getCharacterInfo(i);
+                PlayerCharacter activeCharacter = battleMan.getPartyMembersAlive().get(i);
                 
                 System.out.printf("----------%nWhat would %s like to do:%n", activeCharacter.getName());
                 System.out.println("1: Attack");
                 System.out.println("2: Magic");
                 System.out.println("3: Defend");
                 System.out.println("4: Flee");
+                System.out.print("Choice: ");
                 
                 int input = scanner.nextInt();
                 characterTurn(input, activeCharacter);
             } else {
                 battleMan.finishBattle();
-                return;
+                break;
             }
         }
         
@@ -59,7 +60,7 @@ public class BattleScene {
                    System.out.printf("%s chose to attack%n", activeChar.getName());
                    
                    Enemy target = chooseTarget();
-                   battleMan.doPlayerAttack(target, activeChar);
+                   System.out.println(battleMan.doPlayerAttack(target, activeChar));
                }
                case 2 -> {
                    System.out.printf("%s chose to use a spell:%n", activeChar.getName());
@@ -70,13 +71,12 @@ public class BattleScene {
                        System.out.println(activeChar.getPossibleAttacks().get(i));
                    }
                    
-                   System.out.print("Choose an attack: ");
+                   System.out.print("Choose a spell: ");
                    int input = scanner.nextInt();
                    Attack chosenAttack = battleMan.getSpecificAttack(activeChar.getPossibleAttacks().get(input));
                    
-                   
                    Enemy target = chooseTarget();
-                   battleMan.doPlayerMagic(target, chosenAttack, activeChar);
+                   System.out.println(battleMan.doPlayerMagic(target, chosenAttack, activeChar));
                }
                case 3 -> {
                    System.out.printf("%s chose to defend%n", activeChar.getName());
@@ -91,7 +91,12 @@ public class BattleScene {
     }
     
     public void enemyTurn () {
-        battleMan.doEnemyTurn();
+        System.out.printf("Enemies turn%n----------%n");
+        
+        for(int i = 0; i < battleMan.getAliveEnemies().size(); i++) {
+            System.out.println(battleMan.getAliveEnemies().get(i).getDisplayName() + "'s turn:");
+            System.out.println(battleMan.doEnemyTurn(battleMan.getAliveEnemies().get(i)));
+        }
     }
     
     public void printEnemiesAlive() {
@@ -130,8 +135,9 @@ public class BattleScene {
     }
     
     public Enemy chooseTarget() {
-        System.out.println("Which target would you like to attack?");
+        System.out.printf("----------%nWhich target would you like to attack?%n");
         printEnemiesAliveShort();
+        System.out.print("Choice: ");
         int input = scanner.nextInt();
         
         return battleMan.getAliveEnemies().get(input - 1);

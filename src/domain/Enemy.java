@@ -1,6 +1,6 @@
 package domain;
 
-import persistence.Elements;
+import util.Elements;
 
 import java.util.ArrayList;
 
@@ -66,7 +66,12 @@ public class Enemy extends Combatant{
     
     public Elements getEnemyElement() {return this.enemyElement;}
     
-    public String getEnemyDisplayName() {
+    public ArrayList<String> getAttackList() {
+        return attackList;
+    }
+    
+    @Override
+    public String getDisplayName() {
         String output = getEnemyElement().getDisplayName() + " " + getEnemyRace();
         return output;
      }
@@ -84,10 +89,10 @@ public class Enemy extends Combatant{
     
     @Override
     public String toString() {
-        return String.format("Enemy: %s%nType: %s %n- Health: %d / %d %n- Magic: %d/%d%n- Stats: LVL: %d, STR: %d, INT: %d ", getEnemyDisplayName(), getEnemyElement().getDisplayName(), getHp(), getMaxHP(), getMp(), getMaxMp(), getLevel(), getStrength(), getIntelligence());
+        return String.format("Enemy: %s%nType: %s %n- Health: %d / %d %n- Magic: %d/%d%n- Stats: LVL: %d, STR: %d, INT: %d ", getDisplayName(), getEnemyElement().getDisplayName(), getHp(), getMaxHP(), getMp(), getMaxMp(), getLevel(), getStrength(), getIntelligence());
     }
     
     public String getShortString() {
-        return String.format("%s%n- HP:%d/%d%n- MP:%d/%d%n", getEnemyDisplayName(),getHp(), getMaxHP(), getMp(), getMaxMp());
+        return String.format("%s%n- HP:%d/%d%n- MP:%d/%d%n", getDisplayName(),getHp(), getMaxHP(), getMp(), getMaxMp());
     }
 }

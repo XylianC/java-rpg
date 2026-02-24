@@ -1,6 +1,6 @@
 package domain;
 
-import persistence.Elements;
+import util.Elements;
 
 public class Attack {
     /// ------      Attributes     ------  ///

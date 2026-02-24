@@ -1,4 +1,4 @@
-package persistence;
+package util;
 
 public enum Classes {
     KNIGHT("Knight"),

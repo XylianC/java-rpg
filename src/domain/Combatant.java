@@ -188,6 +188,11 @@ public abstract class Combatant {
     public boolean isAlive() {return isAlive;}
     
     
+    public String getDisplayName() {
+        return getName();
+    }
+    
+    
     // ---- Setters ---- //
     public void resetStats() {
         setStrength(calculateStats(baseSTR));
@@ -237,29 +242,29 @@ public abstract class Combatant {
     }
     
     // -- Class Specific Methods  -- //
-    public boolean attemptAttack(Combatant target, Attack attemptedAttack) {
+    public String attemptAttack(Combatant target, Attack attemptedAttack) {
         //todo: attack logic comes here
         boolean succes = false;
         
         if ((attemptedAttack.getBaseAccuracy() * level) >= MINIMUM_ACC_FOR_SUCCES) {
-            doAttack(target, attemptedAttack);
-            succes = true;
+            return doAttack(target, attemptedAttack);
+        } else {
+            return "The attack missed";
         }
         
-        return succes;
     }
     
-    public void doAttack(Combatant target, Attack attackToDo) {
+    public String doAttack(Combatant target, Attack attackToDo) {
         //todo: attack logic comes here
         int damage = attackToDo.getBaseDamage() * strength;
         target.takeDamage(damage);
         
         if(attackToDo.isMagic()) {
-            System.out.printf("%n%s casts %s on %s for %d damage%n", this.getName(),attackToDo.getAttackName(), target.getName(), damage);
+            return String.format("%n%s casts %s on %s for %d damage%n", this.getDisplayName(),attackToDo.getAttackName(), target.getDisplayName(), damage);
+            
         } else {
-            System.out.printf("%n%s hits %s for %d damage%n", this.getName(), target.getName(), damage);
+            return String.format("%n%s hits %s for %d damage%n", this.getDisplayName(), target.getDisplayName(), damage);
         }
-        
     }
     
     public void takeDamage(int amount) {

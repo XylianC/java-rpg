@@ -2,7 +2,7 @@ package domain;
 
 import org.xml.sax.SAXException;
 import persistence.AttackRepository;
-import persistence.Classes;
+import util.Classes;
 import persistence.EnemyRepository;
 
 import javax.xml.parsers.ParserConfigurationException;
