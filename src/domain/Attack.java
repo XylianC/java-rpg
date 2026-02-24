@@ -75,6 +75,8 @@ public class Attack {
         return element;
     }
     
+    public boolean isMagic() {return isMagic;}
+    
     public int getBaseDamage() {
         return baseDamage;
     }

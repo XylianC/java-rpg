@@ -55,16 +55,18 @@ public class EnemyRepository {
         
         for (int i = 0; i < enemyNodes.getLength(); i++) {
             Element enemyElement = (Element) enemyNodes.item(i);
-            NodeList possibleAttackNodes = enemyElement.getElementsByTagName("attacklist");
             
+            NodeList possibleAttackNodes = enemyElement.getElementsByTagName("attacklist");
             ArrayList<String> possibleAttacks = new ArrayList<>();
             
             for (int j = 0; j < possibleAttackNodes.getLength(); j++) {
                 Element attackElement = (Element) possibleAttackNodes.item(j);
-                String possibleAttack = attackElement.getElementsByTagName("possibleAttack").item(0).getTextContent();
+                NodeList attackCodes = attackElement.getElementsByTagName("possibleAttack");
                 
-                possibleAttacks.add(possibleAttack);
-            
+                for (int k = 0; k < attackCodes.getLength(); k++) {
+                    String possibleAttack = attackElement.getElementsByTagName("possibleAttack").item(k).getTextContent();
+                    possibleAttacks.add(possibleAttack);
+                }
             }
             
             String code = enemyElement.getElementsByTagName("code").item(0).getTextContent();

@@ -1,9 +1,6 @@
 package cui;
 
-import domain.BattleManager;
-import domain.Enemy;
-import domain.PlayerCharacter;
-import domain.PlayerParty;
+import domain.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -60,21 +57,26 @@ public class BattleScene {
            switch(choice) {
                case 1 -> {
                    System.out.printf("%s chose to attack%n", activeChar.getName());
-                   System.out.println("Which target would you like to attack?");
-                   printEnemiesAlive();
-                   int input = scanner.nextInt();
                    
-                   Enemy target = battleMan.getAliveEnemies().get(input - 1);
+                   Enemy target = chooseTarget();
                    battleMan.doPlayerAttack(target, activeChar);
-                   
                }
                case 2 -> {
                    System.out.printf("%s chose to use a spell:%n", activeChar.getName());
-                   battleMan.doPlayerMagic();
-                   System.out.printf("What spell do you want to use? %n" +
-                           "1: TEST%n" +
-                           "2: TEST2%n" +
-                           "3: TEST3%n");
+                   System.out.printf("What spell do you want to use? %n");
+                   
+                   for (int i = 0; i < activeChar.getPossibleAttacks().size(); i++) {
+                       System.out.print(i + ": ");
+                       System.out.println(activeChar.getPossibleAttacks().get(i));
+                   }
+                   
+                   System.out.print("Choose an attack: ");
+                   int input = scanner.nextInt();
+                   Attack chosenAttack = battleMan.getSpecificAttack(activeChar.getPossibleAttacks().get(input));
+                   
+                   
+                   Enemy target = chooseTarget();
+                   battleMan.doPlayerMagic(target, chosenAttack, activeChar);
                }
                case 3 -> {
                    System.out.printf("%s chose to defend%n", activeChar.getName());
@@ -104,6 +106,18 @@ public class BattleScene {
         
     }
     
+    public void printEnemiesAliveShort() {
+        System.out.println("Possible Targets:");
+        
+        ArrayList<Enemy> enemiesThisTurn = battleMan.getAliveEnemies();
+        
+        for (int i = 0; i < enemiesThisTurn.size(); i++) {
+            System.out.print("Slot " + (i + 1) + ": ");
+            System.out.println(enemiesThisTurn.get(i).getShortString());
+        }
+        
+    }
+    
     public void printPlayerCharactersAlive() {
         System.out.println("Currently, these players are in the fight");
         
@@ -113,6 +127,14 @@ public class BattleScene {
             System.out.println(player.toString());
             System.out.println();
         }
+    }
+    
+    public Enemy chooseTarget() {
+        System.out.println("Which target would you like to attack?");
+        printEnemiesAliveShort();
+        int input = scanner.nextInt();
+        
+        return battleMan.getAliveEnemies().get(input - 1);
     }
     
 }

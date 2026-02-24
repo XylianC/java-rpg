@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.ArrayList;
+
 public abstract class Combatant {
     // -- Attributen -- //
     // Combatant is shortened to CMT
@@ -42,7 +44,6 @@ public abstract class Combatant {
         this.baseINTEL = intel;
         this.baseHp = hp;
         this.baseMp = mp;
-        
         
         setStrength(calculateStats(baseSTR));
         setIntelligence(calculateStats(baseINTEL));
@@ -186,6 +187,7 @@ public abstract class Combatant {
     
     public boolean isAlive() {return isAlive;}
     
+    
     // ---- Setters ---- //
     public void resetStats() {
         setStrength(calculateStats(baseSTR));
@@ -252,7 +254,12 @@ public abstract class Combatant {
         int damage = attackToDo.getBaseDamage() * strength;
         target.takeDamage(damage);
         
-        System.out.printf("%n%s hits %s for %d damage%n", this.getName(), target.getName(), damage);
+        if(attackToDo.isMagic()) {
+            System.out.printf("%n%s casts %s on %s for %d damage%n", this.getName(),attackToDo.getAttackName(), target.getName(), damage);
+        } else {
+            System.out.printf("%n%s hits %s for %d damage%n", this.getName(), target.getName(), damage);
+        }
+        
     }
     
     public void takeDamage(int amount) {

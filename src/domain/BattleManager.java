@@ -40,6 +40,10 @@ public class BattleManager {
         return battleActive;
     }
     
+    public Attack getSpecificAttack(String attackCode) {
+        return attacks.getAttack(attackCode);
+    }
+    
     public ArrayList<Enemy> getAliveEnemies() {
         return enemyGroup.getEnemiesAlive();
     }
@@ -107,8 +111,8 @@ public class BattleManager {
         activeCharacter.doAttack(target, attacks.getAttack("melee_attack"));
     }
     
-    public void doPlayerMagic() {
-        System.out.println("You chose to use a spell");
+    public void doPlayerMagic(Combatant target, Attack chosenSpell, PlayerCharacter activeCharacter) {
+        activeCharacter.doAttack(target, chosenSpell);
     }
     
     public void doPlayerDefend() {

@@ -86,4 +86,8 @@ public class Enemy extends Combatant{
     public String toString() {
         return String.format("Enemy: %s%nType: %s %n- Health: %d / %d %n- Magic: %d/%d%n- Stats: LVL: %d, STR: %d, INT: %d ", getEnemyDisplayName(), getEnemyElement().getDisplayName(), getHp(), getMaxHP(), getMp(), getMaxMp(), getLevel(), getStrength(), getIntelligence());
     }
+    
+    public String getShortString() {
+        return String.format("%s%n- HP:%d/%d%n- MP:%d/%d%n", getEnemyDisplayName(),getHp(), getMaxHP(), getMp(), getMaxMp());
+    }
 }
