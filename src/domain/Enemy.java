@@ -1,6 +1,6 @@
 package domain;
 
-import persistance.Elements;
+import persistence.Elements;
 
 import java.util.ArrayList;
 
@@ -42,6 +42,21 @@ public class Enemy extends Combatant{
         this.attackList = attacks;
     }
     
+    public Enemy(Enemy original, int level){
+        super(original, level);
+        this.enemyCode = original.enemyCode;
+        this.enemyRace = original.getEnemyRace();
+        this.enemyElement = original.getEnemyElement();
+        this.attackList = original.attackList;
+    }
+    
+    public Enemy(Enemy original){
+        super(original);
+        this.enemyCode = original.enemyCode;
+        this.enemyRace = original.getEnemyRace();
+        this.enemyElement = original.getEnemyElement();
+        this.attackList = original.attackList;
+    }
     
     
     // -- Getters -- //
@@ -69,6 +84,6 @@ public class Enemy extends Combatant{
     
     @Override
     public String toString() {
-        return String.format("Enemy: %s%nType: %s %n- Health: %d / %d %nMP: %d/%d%n- Stats: LVL: %d, STR: %d, INT: %d ", getEnemyDisplayName(), getEnemyElement().getDisplayName(), getHp(), getMaxHP(), getMp(), getMaxMp(), getLevel(), getStrength(), getIntelligence());
+        return String.format("Enemy: %s%nType: %s %n- Health: %d / %d %n- Magic: %d/%d%n- Stats: LVL: %d, STR: %d, INT: %d ", getEnemyDisplayName(), getEnemyElement().getDisplayName(), getHp(), getMaxHP(), getMp(), getMaxMp(), getLevel(), getStrength(), getIntelligence());
     }
 }

@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.ArrayList;
+
 public class PlayerParty {
     // -- Attributen -- //
     private final PlayerCharacter[] players = new PlayerCharacter[4];
@@ -19,6 +21,16 @@ public class PlayerParty {
     
     public int getPartySize() {
         return this.players.length;
+    }
+    
+    public ArrayList<PlayerCharacter> getPartyMembersAlive() {
+        ArrayList<PlayerCharacter> playersAlive = new ArrayList<>();
+        for (PlayerCharacter player : players) {
+            if (player.getHp() > 0) {
+                playersAlive.add(player);
+            }
+        }
+        return playersAlive;
     }
     
     // -- Setters -- //

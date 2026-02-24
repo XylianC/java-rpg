@@ -11,7 +11,7 @@ public class rpgApplication {
     
     public rpgApplication(DomainController dc) throws ParserConfigurationException, IOException, SAXException {
         
-        BattleManager battleMan = new BattleManager(dc.getParty(), dc.getEnemyGroup());
+        BattleManager battleMan = new BattleManager(dc.getParty(), dc.getEnemyGroup(), dc.getAttackRepo());
         battleScene = new BattleScene(battleMan);
         
         battleScene.drawFightScene();

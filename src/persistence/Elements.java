@@ -1,4 +1,4 @@
-package persistance;
+package persistence;
 
 public enum Elements {
     NORMAL("Normal", "None"),

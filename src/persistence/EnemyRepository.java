@@ -1,4 +1,4 @@
-package persistance;
+package persistence;
 
 import domain.Enemy;
 import org.w3c.dom.Document;
@@ -10,7 +10,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -27,11 +26,26 @@ public class EnemyRepository {
     
     public Enemy spawnEnemy(String enemy_code, int areaLevel) {
         
-        Enemy enemyToSpawn = getEnemy(enemy_code);
-        return enemyToSpawn;
+        int levelToSpawn;
+        switch (areaLevel) {
+            case 1 -> levelToSpawn = getLevel(1, 4);
+            case 2 -> levelToSpawn = getLevel(3, 7);
+            case 3 -> levelToSpawn = getLevel(6, 11);
+            case 4 -> levelToSpawn = getLevel(9, 15);
+            case 5 -> levelToSpawn = getLevel(14, 20);
+            default -> levelToSpawn = 1;
+        }
+        
+        return new Enemy(getEnemy(enemy_code), levelToSpawn);
     }
     
-    public void loadEnemies() throws ParserConfigurationException, IOException, SAXException {
+    private int getLevel(int min, int max) {
+        int range = max - min + 1;
+        
+        return (int)(Math.random() * range) + min;
+    }
+    
+    private void loadEnemies() throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
         

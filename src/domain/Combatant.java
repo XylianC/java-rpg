@@ -115,6 +115,46 @@ public abstract class Combatant {
         setHp(getMaxHP());
     }
     
+    public Combatant(Combatant original, int level) {
+        this.name = original.getName();
+        
+        this.setLevel(level);
+        this.baseSTR = original.baseSTR;
+        this.baseINTEL = original.baseINTEL;
+        this.baseHp = original.baseHp;
+        this.baseMp = original.baseMp;
+        
+        
+        setStrength(calculateStats(this.baseSTR));
+        setIntelligence(calculateStats(this.baseINTEL));
+        
+        setMaxMP(calculateMagic());
+        setMp(getMaxMp());
+        
+        setMaxHP(calculateHealth());
+        setHp(getMaxHP());
+    }
+    
+    public Combatant(Combatant original) {
+        this.name = original.getName();
+        
+        this.level = original.getLevel();
+        this.baseSTR = original.baseSTR;
+        this.baseINTEL = original.baseINTEL;
+        this.baseHp = original.baseHp;
+        this.baseMp = original.baseMp;
+        
+        
+        setStrength(calculateStats(this.baseSTR));
+        setIntelligence(calculateStats(this.baseINTEL));
+        
+        setMaxMP(calculateMagic());
+        setMp(getMaxMp());
+        
+        setMaxHP(calculateHealth());
+        setHp(getMaxHP());
+    }
+    
     // -- Getters -- //
     public String getName() {
         return name;
@@ -147,6 +187,16 @@ public abstract class Combatant {
     public boolean isAlive() {return isAlive;}
     
     // ---- Setters ---- //
+    public void resetStats() {
+        setStrength(calculateStats(baseSTR));
+        setIntelligence(calculateStats(baseINTEL));
+        
+        setMaxMP(calculateMagic());
+        setMp(getMaxMp());
+        
+        setMaxHP(calculateHealth());
+        setHp(getMaxHP());
+    }
     
     public void setLevel(int lvl) {
         this.level = lvl;

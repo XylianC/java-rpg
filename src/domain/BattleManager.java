@@ -1,7 +1,7 @@
 package domain;
 
 import org.xml.sax.SAXException;
-import persistance.AttackRepository;
+import persistence.AttackRepository;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
@@ -19,10 +19,10 @@ public class BattleManager {
     private final AttackRepository attacks;
     
     // ------ Constructors ------ //
-    public BattleManager(PlayerParty players, EnemyGroup enemies) throws ParserConfigurationException, IOException, SAXException {
+    public BattleManager(PlayerParty players, EnemyGroup enemies, AttackRepository attacks) throws ParserConfigurationException, IOException, SAXException {
         this.playerParty = players;
         this.enemyGroup = enemies;
-        attacks = new AttackRepository();
+        this.attacks = attacks;
     }
     
     // ------ Getters ------ //
@@ -35,11 +35,17 @@ public class BattleManager {
     }
     
     public boolean getBattleActive() {
+        battleActive = areEnemiesAlive() && !playerFled && arePlayersAlive();
+        
         return battleActive;
     }
     
     public ArrayList<Enemy> getAliveEnemies() {
         return enemyGroup.getEnemiesAlive();
+    }
+    
+    public ArrayList<PlayerCharacter> getPartyMembersAlive() {
+        return playerParty.getPartyMembersAlive();
     }
     
     public PlayerCharacter getCharacterInfo(int slot) {
@@ -67,10 +73,20 @@ public class BattleManager {
         return !enemyGroup.getEnemiesAlive().isEmpty();
     }
     
+    private boolean arePlayersAlive() {
+        return !playerParty.getPartyMembersAlive().isEmpty();
+    }
     
     ///  ----- Enemy Turn ------ ///
-    private void doEnemyTurn() {
+    public void doEnemyTurn() {
         System.out.println("THIS IS THE ENEMY TURN - DEBUG TEXT");
+        
+        ArrayList<PlayerCharacter> playersAlive = getPartyMembersAlive();
+        
+        int target = getRandom(playersAlive.size());
+        PlayerCharacter playerTarget = playersAlive.get(target);
+        
+        System.out.printf("ENEMY ATTEMPTS TO ATTACK: %s%n", playerTarget.getName());
         
         isPlayerTurn = true;
     }
@@ -101,7 +117,6 @@ public class BattleManager {
     
     public void doPlayerFlee() {
         playerFled = true;
-        System.out.println("You chose to flee");
     }
     
     
@@ -125,5 +140,9 @@ public class BattleManager {
     
     Repeat
      */
+    
+    public int getRandom(int max) {
+        return (int)(Math.random() * max);
+    }
 }
 

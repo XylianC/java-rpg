@@ -1,30 +1,29 @@
 package domain;
 
+import persistence.Classes;
+
 public class PlayerCharacter extends Combatant{
     // -- Attributen -- //
-    private final String charClass;
+    private final Classes charClass;
     
     private int exp;
     private int expToNextLevel;
     
-    private static final String DEFAULT_CLASS = "Mage";
+    private static final Classes DEFAULT_CLASS = Classes.WARRIOR;
     
     // -- Constructors -- //
-    public PlayerCharacter(String name, String job, int lvl, int str, int intel, int hp, int mp) {
+    public PlayerCharacter(String name, Classes job, int lvl, int str, int intel, int hp, int mp) {
         super(name, lvl, str, intel, hp);
-        checkJob(job);
         this.charClass = job;
     }
     
-    public PlayerCharacter(String name, String job, int lvl, int str, int intel) {
+    public PlayerCharacter(String name, Classes job, int lvl, int str, int intel) {
         super(name, lvl, str, intel);
-        checkJob(job);
         this.charClass = job;
     }
     
-    public PlayerCharacter(String name, String job) {
+    public PlayerCharacter(String name, Classes job) {
         super(name);
-        checkJob(job);
         this.charClass = job;
     }
     
@@ -36,20 +35,13 @@ public class PlayerCharacter extends Combatant{
     
     ///  Getters ////
     public String getCharClass() {
-        return charClass;
+        return charClass.getDisplayName();
     }
     
     
     ///  --- Class Specific Methods --- ////
-    
-    private void checkJob(String job) {
-        if (job == null || job.isBlank()) {
-            throw new IllegalArgumentException("Character job name can not be null!");
-        }
-    }
-    
     public void levelUp() {
-        //todo: implement better method of levelling up, make it more advancedd.
+        //todo: implement better method of levelling up, make it more advanced.
         //todo: add proper way of increasing the stats per level gained.
         
     }

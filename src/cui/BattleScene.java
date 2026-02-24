@@ -31,19 +31,26 @@ public class BattleScene {
     public void doPlayerTurn() {
         System.out.printf("Player turn%n----------%n");
         
+        printPlayerCharactersAlive();
+        
         printEnemiesAlive();
         
         for (int i = 0; i < battleMan.getPartySize(); i++) {
-            PlayerCharacter activeCharacter = battleMan.getCharacterInfo(i);
-            
-            System.out.printf("----------%nWhat would %s like to do:%n", activeCharacter.getName());
-            System.out.println("1: Attack");
-            System.out.println("2: Magic");
-            System.out.println("3: Defend");
-            System.out.println("4: Flee");
-            
-            int input = scanner.nextInt();
-            characterTurn(input, activeCharacter);
+            if(battleMan.getBattleActive()) {
+                PlayerCharacter activeCharacter = battleMan.getCharacterInfo(i);
+                
+                System.out.printf("----------%nWhat would %s like to do:%n", activeCharacter.getName());
+                System.out.println("1: Attack");
+                System.out.println("2: Magic");
+                System.out.println("3: Defend");
+                System.out.println("4: Flee");
+                
+                int input = scanner.nextInt();
+                characterTurn(input, activeCharacter);
+            } else {
+                battleMan.finishBattle();
+                return;
+            }
         }
         
         
@@ -62,20 +69,27 @@ public class BattleScene {
                    
                }
                case 2 -> {
-                   System.out.println("You chose to do magic");
+                   System.out.printf("%s chose to use a spell:%n", activeChar.getName());
+                   battleMan.doPlayerMagic();
+                   System.out.printf("What spell do you want to use? %n" +
+                           "1: TEST%n" +
+                           "2: TEST2%n" +
+                           "3: TEST3%n");
                }
                case 3 -> {
-                   System.out.println("You chose to defend");
+                   System.out.printf("%s chose to defend%n", activeChar.getName());
+                   battleMan.doPlayerDefend();
                }
                case 4 -> {
-                   System.out.println("You chose to flee");
+                   System.out.printf("%s chose to flee%n", activeChar.getName());
+                   battleMan.doPlayerFlee();
                    
                }
            }
     }
     
     public void enemyTurn () {
-        System.out.println("Does nothing yet");
+        battleMan.doEnemyTurn();
     }
     
     public void printEnemiesAlive() {
@@ -88,6 +102,17 @@ public class BattleScene {
             System.out.println();
         }
         
+    }
+    
+    public void printPlayerCharactersAlive() {
+        System.out.println("Currently, these players are in the fight");
+        
+        ArrayList<PlayerCharacter> playersThisTurn = battleMan.getPartyMembersAlive();
+        
+        for (PlayerCharacter player : playersThisTurn) {
+            System.out.println(player.toString());
+            System.out.println();
+        }
     }
     
 }

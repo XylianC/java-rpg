@@ -1,8 +1,9 @@
 package domain;
 
 import org.xml.sax.SAXException;
-import persistance.AttackRepository;
-import persistance.EnemyRepository;
+import persistence.AttackRepository;
+import persistence.Classes;
+import persistence.EnemyRepository;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
@@ -10,19 +11,20 @@ import java.util.ArrayList;
 
 public class DomainController {
     private final EnemyRepository enemyRepo;
+    private final AttackRepository attackRepo;
     private final PlayerParty party;
     private final EnemyGroup enemyGroup;
 
     
     public DomainController() throws ParserConfigurationException, IOException, SAXException {
         this.enemyRepo = new EnemyRepository();
+        this.attackRepo = new AttackRepository();
         
         PlayerCharacter[] players = createTemplatePlayers();
         this.party  = new PlayerParty(players[0], players[1], players[2], players[3]);
         
         ArrayList<Enemy> enemies = createTemplateEnemies();
         this.enemyGroup = new EnemyGroup(enemies);
-        
     }
     
     
@@ -35,16 +37,19 @@ public class DomainController {
         return enemyGroup;
     }
     
+    public AttackRepository getAttackRepo() {
+        return attackRepo;
+    }
     
     
     ///  ---- Debug Methods ---- ///
     public PlayerCharacter[] createTemplatePlayers() {
         PlayerCharacter[] players = new PlayerCharacter[4];
         
-        players[0] = new PlayerCharacter("Xylian", "Warrior");
-        players[1] = new PlayerCharacter("Millia");
-        players[2] = new PlayerCharacter("Ruben", "Monk");
-        players[3] = new PlayerCharacter("Mattis", "Scholar");
+        players[0] = new PlayerCharacter("Xylian", Classes.WARRIOR);
+        players[1] = new PlayerCharacter("Millia", Classes.MAGE);
+        players[2] = new PlayerCharacter("Ruben", Classes.MONK);
+        players[3] = new PlayerCharacter("Mattis", Classes.SCHOLAR);
         
         return players;
     }
@@ -52,10 +57,10 @@ public class DomainController {
     public ArrayList<Enemy> createTemplateEnemies() {
         assert enemyRepo != null;
         ArrayList<Enemy> enemies = new ArrayList<>();
-        enemies.add(enemyRepo.getEnemy("slime_normal"));
-        enemies.add(enemyRepo.getEnemy("slime_fire"));
-        enemies.add(enemyRepo.getEnemy("dragon_fire"));
-        enemies.add(enemyRepo.getEnemy("dragon_electric"));
+        enemies.add(enemyRepo.spawnEnemy("slime_normal", 1));
+        enemies.add(enemyRepo.spawnEnemy("slime_fire", 1));
+        enemies.add(enemyRepo.spawnEnemy("dragon_fire", 3));
+        enemies.add(enemyRepo.spawnEnemy("dragon_electric", 3));
         
         return enemies;
     }
