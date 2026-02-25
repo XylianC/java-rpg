@@ -67,6 +67,8 @@ public class Attack {
     }
     
     /// ------      Getters     ------  ///
+    public String getAttackCode() { return attackCode; }
+    
     public String getAttackName() {
         return attackName;
     }

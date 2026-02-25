@@ -21,7 +21,7 @@ public class EnemyRepository {
         loadEnemies();
     }
     
-    public Enemy getEnemy(String enemy_code) {
+    private Enemy getEnemy(String enemy_code) {
         return enemies.get(enemy_code);
     }
     

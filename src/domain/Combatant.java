@@ -27,6 +27,8 @@ public abstract class Combatant {
     
     private boolean isAlive = true;
     
+    private ArrayList<String> attackList = new ArrayList<>();
+    
     private static final int DEFAULT_HP = 100;
     private static final int DEFAULT_MP = 10;
     private static final int DEFAULT_SKILL_LEVEL = 1;
@@ -35,7 +37,28 @@ public abstract class Combatant {
     
     
     // -- Constructors -- //
-    public Combatant(String name, int str, int intel, int hp, int mp, int lvl) {
+    public Combatant(String name, int str, int intel, int hp, int mp, ArrayList<String> attackList) {
+        checkName(name);
+        this.name = name;
+        
+        setLevel(DEFAULT_SKILL_LEVEL);
+        this.baseSTR = str;
+        this.baseINTEL = intel;
+        this.baseHp = hp;
+        this.baseMp = mp;
+        this.attackList = attackList;
+        
+        setStrength(calculateStats(baseSTR));
+        setIntelligence(calculateStats(baseINTEL));
+        
+        setMaxMP(calculateMagic());
+        setMp(getMaxMp());
+        
+        setMaxHP(calculateHealth());
+        setHp(getMaxHP());
+    }
+    
+    public Combatant(String name, int lvl, int str, int intel, int hp, int mp) {
         checkName(name);
         this.name = name;
         
@@ -45,66 +68,6 @@ public abstract class Combatant {
         this.baseHp = hp;
         this.baseMp = mp;
         
-        setStrength(calculateStats(baseSTR));
-        setIntelligence(calculateStats(baseINTEL));
-        
-        setMaxMP(calculateMagic());
-        setMp(getMaxMp());
-        
-        setMaxHP(calculateHealth());
-        setHp(getMaxHP());
-    }
-    
-    public Combatant(String name, int str, int intel, int hp, int mp) {
-        checkName(name);
-        this.name = name;
-        
-        setLevel(DEFAULT_SKILL_LEVEL);
-        this.baseSTR = str;
-        this.baseINTEL = intel;
-        this.baseHp = hp;
-        this.baseMp = mp;
-        
-        setStrength(calculateStats(baseSTR));
-        setIntelligence(calculateStats(baseINTEL));
-        
-        setMaxMP(calculateMagic());
-        setMp(getMaxMp());
-        
-        setMaxHP(calculateHealth());
-        setHp(getMaxHP());
-    }
-    
-    public Combatant(String name, int lvl, int str, int intel) {
-        checkName(name);
-        this.name = name;
-        
-        setLevel(lvl);
-        this.baseSTR = str;
-        this.baseINTEL = intel;
-        this.baseHp = DEFAULT_HP;
-        this.baseMp = DEFAULT_MP;
-        
-        setStrength(calculateStats(baseSTR));
-        setIntelligence(calculateStats(baseINTEL));
-        
-        setMaxMP(calculateMagic());
-        setMp(getMaxMp());
-        
-        setMaxHP(calculateHealth());
-        setHp(getMaxHP());
-    }
-    
-    
-    public Combatant(String name) {
-        checkName(name);
-        this.name = name;
-        
-        setLevel(DEFAULT_SKILL_LEVEL);
-        this.baseSTR = DEFAULT_SKILL_LEVEL;
-        this.baseINTEL = DEFAULT_SKILL_LEVEL;
-        this.baseHp = DEFAULT_HP;
-        this.baseMp = DEFAULT_MP;
         
         setStrength(calculateStats(baseSTR));
         setIntelligence(calculateStats(baseINTEL));
@@ -124,7 +87,7 @@ public abstract class Combatant {
         this.baseINTEL = original.baseINTEL;
         this.baseHp = original.baseHp;
         this.baseMp = original.baseMp;
-        
+        this.attackList = original.attackList;
         
         setStrength(calculateStats(this.baseSTR));
         setIntelligence(calculateStats(this.baseINTEL));
@@ -136,25 +99,6 @@ public abstract class Combatant {
         setHp(getMaxHP());
     }
     
-    public Combatant(Combatant original) {
-        this.name = original.getName();
-        
-        this.level = original.getLevel();
-        this.baseSTR = original.baseSTR;
-        this.baseINTEL = original.baseINTEL;
-        this.baseHp = original.baseHp;
-        this.baseMp = original.baseMp;
-        
-        
-        setStrength(calculateStats(this.baseSTR));
-        setIntelligence(calculateStats(this.baseINTEL));
-        
-        setMaxMP(calculateMagic());
-        setMp(getMaxMp());
-        
-        setMaxHP(calculateHealth());
-        setHp(getMaxHP());
-    }
     
     // -- Getters -- //
     public String getName() {
@@ -184,6 +128,10 @@ public abstract class Combatant {
     public int getMp() {return mp;}
     
     public int getMaxMp() {return maxMp;}
+    
+    public ArrayList<String> getPossibleAttacks () {
+        return attackList;
+    }
     
     public boolean isAlive() {return isAlive;}
     
@@ -242,6 +190,10 @@ public abstract class Combatant {
     }
     
     // -- Class Specific Methods  -- //
+    public void addAttack(String attackCode) {
+        attackList.add(attackCode);
+    }
+    
     public String attemptAttack(Combatant target, Attack attemptedAttack) {
         //todo: attack logic comes here
         boolean succes = false;
@@ -254,27 +206,55 @@ public abstract class Combatant {
         
     }
     
+    
+    
     public String doAttack(Combatant target, Attack attackToDo) {
         //todo: attack logic comes here
-        int damage = attackToDo.getBaseDamage() * strength;
-        target.takeDamage(damage);
+        double damage;
         
         if(attackToDo.isMagic()) {
+            double dmgMultiplier = calculateWeaknessMultiplier(target, attackToDo);
+            
+            damage = attackToDo.getBaseDamage() * intelligence * dmgMultiplier;
+            target.takeDamage(damage);
             this.mp -= attackToDo.getCost();
-            return String.format("%n%s casts %s on %s for %d damage%n", this.getDisplayName(),attackToDo.getAttackName(), target.getDisplayName(), damage);
+            return String.format("%n%s casts %s on %s for %d damage%n", this.getDisplayName(),attackToDo.getAttackName(), target.getDisplayName(), (int) damage);
             
         } else {
-            return String.format("%n%s hits %s for %d damage%n", this.getDisplayName(), target.getDisplayName(), damage);
+            damage = attackToDo.getBaseDamage() * strength;
+            target.takeDamage(damage);
+            return String.format("%n%s hits %s for %d damage%n", this.getDisplayName(), target.getDisplayName(), (int) damage);
         }
     }
     
-    public void takeDamage(int amount) {
+    private double calculateWeaknessMultiplier(Combatant target, Attack attackToDo) {
+        double dmgMultiplier = 1;
+        
+        if(target instanceof Enemy) {
+            String element = attackToDo.getElement().getDisplayName();
+            String enemyElement = ((Enemy) target).getEnemyElement().getDisplayName();
+            String weakness = ((Enemy) target).getEnemyElement().getWeakness();
+            
+            if(element.toLowerCase().equals(weakness.toLowerCase())) {
+                return 1.5;
+            } else if (element.toLowerCase().equals(enemyElement.toLowerCase())) {
+                return .5;
+            }
+            
+        } else {
+            return 1;
+        }
+        
+        return dmgMultiplier;
+    
+    }
+    
+    public void takeDamage(double amount) {
         hp -= amount;
-        if (hp < 0) {
+        if (hp <= 0) {
             this.isAlive = false;
         }
     }
-    
     
     private void checkName(String name) {
         if (name == null || name.isBlank()) {

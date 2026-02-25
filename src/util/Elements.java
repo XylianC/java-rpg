@@ -2,7 +2,7 @@ package util;
 
 public enum Elements {
     NORMAL("Normal", "None"),
-    FIRE("Fire", "Water"),
+    FIRE("Fire", "Ice"),
     ICE("Ice", "Fire"),
     ELECTRIC("Electric", "Ice"),
     DARK("Dark", "Light"),

@@ -22,7 +22,11 @@ public class BattleScene {
     
     public void doBattleCycle() {
         doPlayerTurn();
-        enemyTurn();
+        if(battleMan.getBattleActive()) {
+            enemyTurn();
+        } else {
+            battleMan.finishBattle();
+        }
     }
     
     public void doPlayerTurn() {
@@ -46,7 +50,6 @@ public class BattleScene {
                 int input = scanner.nextInt();
                 characterTurn(input, activeCharacter);
             } else {
-                battleMan.finishBattle();
                 break;
             }
         }

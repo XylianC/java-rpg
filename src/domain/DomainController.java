@@ -46,16 +46,16 @@ public class DomainController {
     public PlayerCharacter[] createTemplatePlayers() {
         PlayerCharacter[] players = new PlayerCharacter[4];
         
-        players[0] = new PlayerCharacter("Xylian", Classes.WARRIOR);
+        players[0] = new PlayerCharacter("Xylian", Classes.WARRIOR, 3);
         players[0].addAttack("melee_attack");
         players[0].addAttack("fire_bolt");
-        players[1] = new PlayerCharacter("Millia", Classes.MAGE);
+        players[1] = new PlayerCharacter("Millia", Classes.MAGE, 2);
         players[1].addAttack("melee_attack");
         players[1].addAttack("ice_bolt");
-        players[2] = new PlayerCharacter("Ruben", Classes.MONK);
+        players[2] = new PlayerCharacter("Ruben", Classes.MONK, 4);
         players[2].addAttack("melee_attack");
         players[2].addAttack("fire_bolt");
-        players[3] = new PlayerCharacter("Mattis", Classes.SCHOLAR);
+        players[3] = new PlayerCharacter("Mattis", Classes.SCHOLAR, 2);
         players[3].addAttack("melee_attack");
         players[3].addAttack("lightning_bolt");
         

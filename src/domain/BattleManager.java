@@ -9,10 +9,8 @@ import java.util.ArrayList;
 
 public class BattleManager {
     // ------ Attributes ------ //
-    private boolean isPlayerTurn;
     private boolean battleActive = true;
     private boolean playerFled;
-    private int battleTurn = 1;
     
     private final PlayerParty playerParty;
     private final EnemyGroup enemyGroup;
@@ -26,14 +24,6 @@ public class BattleManager {
     }
     
     // ------ Getters ------ //
-    public boolean isPlayerTurn() {
-        return isPlayerTurn;
-    }
-    
-    public int getBattleTurn() {
-        return battleTurn;
-    }
-    
     public boolean getBattleActive() {
         battleActive = areEnemiesAlive() && !playerFled && arePlayersAlive();
         
@@ -52,14 +42,14 @@ public class BattleManager {
         return playerParty.getPartyMembersAlive();
     }
     
+    public int getPartySize() {
+        return this.playerParty.getPartySize();
+    }
+    
     public PlayerCharacter getCharacterInfo(int slot) {
         return this.playerParty.getPlayerBySlot(slot);
     }
     
-    public int getPartySize() {
-        return this.playerParty.getPartySize();
-    }
-
     
     // ------ Class Methods ------ //
     
@@ -92,22 +82,10 @@ public class BattleManager {
         int randomAttack = getRandom(possibleAttacks.size());
         
         Attack attackToTry = attacks.getAttack(possibleAttacks.get(randomAttack));
-        isPlayerTurn = true;
         return activeEnemy.attemptAttack(playerTarget, attackToTry);
     }
     
-    ///  ----- Player Turn ------ ///
-    
-//    public void doPlayerTurn(int input) {
-//        switch (input) {
-//            //case 1 -> doPlayerAttack();
-//            case 2 -> doPlayerMagic();
-//            case 3 -> doPlayerDefend();
-//            case 4 -> doPlayerFlee();
-//        }
-//        isPlayerTurn = false;
-//    }
-    
+    ///  ------ Player Turn ------ ///
     public String doPlayerAttack(Combatant target, PlayerCharacter activeCharacter) {
         return activeCharacter.doAttack(target, attacks.getAttack("melee_attack"));
     }
@@ -116,36 +94,15 @@ public class BattleManager {
         return activeCharacter.doAttack(target, chosenSpell);
     }
     
-    public void doPlayerDefend() {
-        System.out.println("You chose to defend");
+    public String doPlayerDefend() {
+        return String.format("");
     }
     
     public void doPlayerFlee() {
         playerFled = true;
     }
     
-    
-    /*
-    
-    One complete turn of combat
-
-    Player turn
-    In one turn, the player selects the preferred action (Attack, Magic, Defend, Flee), for every member of the party;
-    
-    If the player chooses: attack    -> he needs to choose a target -> calculations are done -> attack
-    If the player chooses: magic     -> same thing as the above basically, except he chooses a spell as well.
-    If the player chooses: defend    -> no targets needs to be chosen -> damage is smaller
-    If the player chooses: flee      -> some calculations are done to see if they can flee
-    
-    Enemy turn
-    In one turn, every enemies goes through this list of commands
-    1) The enemy chooses a random party member, and chooses an attack out of his attack list
-    2) The game calculates if the attack hits, and how much damage it does
-    3) The playerCharacter takes eventual damage
-    
-    Repeat
-     */
-    
+    ///  --- Help methods --- ///
     public int getRandom(int max) {
         return (int)(Math.random() * max);
     }

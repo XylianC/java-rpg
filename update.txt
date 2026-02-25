@@ -1,0 +1,2 @@
+Reduced the combatant from 6 to 2 constructors
+Added a sprite for slimes: slimes, electric, fire, ice
