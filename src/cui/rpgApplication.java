@@ -10,8 +10,14 @@ public class rpgApplication {
     BattleScene battleScene;
     
     public rpgApplication(DomainController dc) throws ParserConfigurationException, IOException, SAXException {
+        boolean bossMonster = false;
         
-        BattleManager battleMan = new BattleManager(dc.getParty(), dc.getEnemyGroup(), dc.getAttackRepo());
+        BattleManager battleMan;
+        if(bossMonster) {
+            battleMan = new BattleManager(dc.getParty(), dc.getEnemyGroup(), dc.getAttackRepo(), dc.getBossMonster());
+        } else {
+            battleMan = new BattleManager(dc.getParty(), dc.getEnemyGroup(), dc.getAttackRepo());
+        }
         battleScene = new BattleScene(battleMan);
         
         battleScene.drawFightScene();

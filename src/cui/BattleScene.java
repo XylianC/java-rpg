@@ -38,16 +38,25 @@ public class BattleScene {
         
         for (int i = 0; i < battleMan.getPartyMembersAlive().size(); i++) {
             if(battleMan.getBattleActive()) {
+                int input;
+                
                 PlayerCharacter activeCharacter = battleMan.getPartyMembersAlive().get(i);
                 
-                System.out.printf("----------%nWhat would %s like to do:%n", activeCharacter.getName());
-                System.out.println("1: Attack");
-                System.out.println("2: Magic");
-                System.out.println("3: Defend");
-                System.out.println("4: Flee");
-                System.out.print("Choice: ");
-                
-                int input = scanner.nextInt();
+                if (!battleMan.isBossFight()) {
+                    System.out.printf("----------%nWhat would %s like to do:%n", activeCharacter.getName());
+                    System.out.println("1: Attack");
+                    System.out.println("2: Magic");
+                    System.out.println("3: Defend");
+                    System.out.println("4: Flee");
+                    System.out.print("Choice: ");
+                } else {
+                    System.out.printf("----------%nWhat would %s like to do:%n", activeCharacter.getName());
+                    System.out.println("1: Attack");
+                    System.out.println("2: Magic");
+                    System.out.println("3: Defend");
+                    System.out.print("Choice: ");
+                }
+                input = scanner.nextInt();
                 characterTurn(input, activeCharacter);
             } else {
                 break;
@@ -55,6 +64,10 @@ public class BattleScene {
         }
         
         
+    }
+    
+    private void printBossMonster() {
+        System.out.println(battleMan.getBossMonster().toString());
     }
     
     public void characterTurn(int choice, PlayerCharacter activeChar) {
@@ -89,6 +102,9 @@ public class BattleScene {
                    System.out.printf("%s chose to flee%n", activeChar.getName());
                    battleMan.doPlayerFlee();
                    
+               }
+               default -> {
+                   System.out.println("Invalid choice, please choose again");
                }
            }
     }
@@ -141,8 +157,9 @@ public class BattleScene {
         System.out.printf("----------%nWhich target would you like to attack?%n");
         printEnemiesAliveShort();
         System.out.print("Choice: ");
-        int input = scanner.nextInt();
+        int input;
         
+        input = scanner.nextInt();
         return battleMan.getAliveEnemies().get(input - 1);
     }
     

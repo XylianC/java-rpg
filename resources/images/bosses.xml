@@ -1,0 +1,18 @@
+<bosses>
+    <boss>
+        <name>Le Eric</name>
+        <level>999</level>
+        <baseSTR>999</baseSTR>
+        <baseINTEL>0</baseINTEL>
+        <baseHP>999</baseHP>
+        <baseMP>999</baseMP>
+    </boss>
+    <boss>
+        <name>Le Rufus</name>
+        <level>100</level>
+        <baseSTR>100</baseSTR>
+        <baseINTEL>20</baseINTEL>
+        <baseHP>150</baseHP>
+        <baseMP>50</baseMP>
+    </boss>
+</bosses>

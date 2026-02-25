@@ -11,16 +11,27 @@ public class BattleManager {
     // ------ Attributes ------ //
     private boolean battleActive = true;
     private boolean playerFled;
+    private boolean isBossFight;
     
     private final PlayerParty playerParty;
     private final EnemyGroup enemyGroup;
     private final AttackRepository attacks;
+    private BossMonster bossMonster = null;
     
     // ------ Constructors ------ //
+    public BattleManager(PlayerParty players, EnemyGroup enemies, AttackRepository attacks, BossMonster bossMonster) throws ParserConfigurationException, IOException, SAXException {
+        this.playerParty = players;
+        this.enemyGroup = enemies;
+        this.attacks = attacks;
+        this.bossMonster = bossMonster;
+        isBossFight = true;
+    }
+    
     public BattleManager(PlayerParty players, EnemyGroup enemies, AttackRepository attacks) throws ParserConfigurationException, IOException, SAXException {
         this.playerParty = players;
         this.enemyGroup = enemies;
         this.attacks = attacks;
+        isBossFight = false;
     }
     
     // ------ Getters ------ //
@@ -50,6 +61,9 @@ public class BattleManager {
         return this.playerParty.getPlayerBySlot(slot);
     }
     
+    public BossMonster getBossMonster() {return this.bossMonster;}
+    
+    public boolean isBossFight() { return this.isBossFight; }
     
     // ------ Class Methods ------ //
     
@@ -78,7 +92,7 @@ public class BattleManager {
         int target = getRandom(playersAlive.size());
         PlayerCharacter playerTarget = playersAlive.get(target);
         
-        ArrayList<String> possibleAttacks = activeEnemy.getAttackList();
+        ArrayList<String> possibleAttacks = activeEnemy.getPossibleAttacks();
         int randomAttack = getRandom(possibleAttacks.size());
         
         Attack attackToTry = attacks.getAttack(possibleAttacks.get(randomAttack));
