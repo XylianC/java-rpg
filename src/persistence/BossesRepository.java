@@ -12,6 +12,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BossesRepository {
@@ -36,6 +37,19 @@ public class BossesRepository {
         for (int i = 0; i < bossNodes.getLength(); i++) {
             Element bossElement = (Element) bossNodes.item(i);
             
+            NodeList possibleAttackNodes = enemyElement.getElementsByTagName("attacklist");
+            ArrayList<String> possibleAttacks = new ArrayList<>();
+            
+            for (int j = 0; j < possibleAttackNodes.getLength(); j++) {
+                Element attackElement = (Element) possibleAttackNodes.item(j);
+                NodeList attackCodes = attackElement.getElementsByTagName("possibleAttack");
+                
+                for (int k = 0; k < attackCodes.getLength(); k++) {
+                    String possibleAttack = attackElement.getElementsByTagName("possibleAttack").item(k).getTextContent();
+                    possibleAttacks.add(possibleAttack);
+                }
+            }
+            
             String name = bossElement.getElementsByTagName("name").item(0).getTextContent();
             int LVL = Integer.parseInt(bossElement.getElementsByTagName("level").item(0).getTextContent());
             int STR = Integer.parseInt(bossElement.getElementsByTagName("baseSTR").item(0).getTextContent());
@@ -44,7 +58,7 @@ public class BossesRepository {
             int MP = Integer.parseInt(bossElement.getElementsByTagName("baseMP").item(0).getTextContent());
             
             
-            BossMonster bossToAdd = new BossMonster(name, LVL, STR, INTEL, HP, MP);
+            BossMonster bossToAdd = new BossMonster(name, LVL, STR, INTEL, HP, MP, possibleAttacks);
             bosses.put(name, bossToAdd);
         }
     }

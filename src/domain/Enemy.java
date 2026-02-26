@@ -9,8 +9,6 @@ public class Enemy extends Combatant{
     private final String enemyRace;
     private final Elements enemyElement;
     
-    private ArrayList<String> attackList = new ArrayList<>();
-    
     // -- Constructors -- //
     
     
@@ -31,7 +29,6 @@ public class Enemy extends Combatant{
         this.enemyCode = original.enemyCode;
         this.enemyRace = original.getEnemyRace();
         this.enemyElement = original.getEnemyElement();
-        this.attackList = original.attackList;
     }
     
     

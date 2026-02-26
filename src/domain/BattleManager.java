@@ -68,12 +68,12 @@ public class BattleManager {
     // ------ Class Methods ------ //
     
     ///  ---- General methods ---- ///
-    public void finishBattle() {
+    public String finishBattle() {
         if(!this.playerFled) {
-            System.out.println("Battle is over");
-            System.out.println("This is the loot");
+            return String.format("Battle is over%nThis is the loot: %n-TEST 1%n- TEST 2");
+            
         } else {
-            System.out.println("Battle is over, player fled, no loot");
+            return String.format("Battle is over, player fled, no loot");
         }
     }
     

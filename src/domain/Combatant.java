@@ -58,7 +58,7 @@ public abstract class Combatant {
         setHp(getMaxHP());
     }
     
-    public Combatant(String name, int lvl, int str, int intel, int hp, int mp) {
+    public Combatant(String name, int lvl, int str, int intel, int hp, int mp, ArrayList<String> attackList) {
         checkName(name);
         this.name = name;
         
@@ -67,7 +67,7 @@ public abstract class Combatant {
         this.baseINTEL = intel;
         this.baseHp = hp;
         this.baseMp = mp;
-        
+        this.attackList = attackList;
         
         setStrength(calculateStats(baseSTR));
         setIntelligence(calculateStats(baseINTEL));
