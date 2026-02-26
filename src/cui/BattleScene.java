@@ -43,30 +43,13 @@ public class BattleScene {
                 int input;
                 
                 PlayerCharacter activeCharacter = battleMan.getPartyMembersAlive().get(i);
-                givePlayerChoice(activeCharacter);
+                printPlayerChoice(activeCharacter);
                 
                 input = scanner.nextInt();
                 characterTurn(input, activeCharacter);
             } else {
                 break;
             }
-        }
-    }
-    
-    private void givePlayerChoice(PlayerCharacter activeCharacter) {
-        if (!battleMan.isBossFight()) {
-            System.out.printf("----------%nWhat would %s like to do:%n", activeCharacter.getName());
-            System.out.println("1: Attack");
-            System.out.println("2: Magic");
-            System.out.println("3: Defend");
-            System.out.println("4: Flee");
-            System.out.print("Choice: ");
-        } else {
-            System.out.printf("----------%nWhat would %s like to do:%n", activeCharacter.getName());
-            System.out.println("1: Attack");
-            System.out.println("2: Magic");
-            System.out.println("3: Defend");
-            System.out.print("Choice: ");
         }
     }
     
@@ -95,18 +78,35 @@ public class BattleScene {
                    System.out.println(battleMan.doPlayerMagic(target, chosenAttack, activeChar));
                }
                case 3 -> {
-                   System.out.printf("%s chose to defend%n", activeChar.getName());
-                   battleMan.doPlayerDefend();
+                   System.out.println(battleMan.doPlayerDefend(activeChar));
                }
                case 4 -> {
-                   System.out.printf("%s chose to flee%n", activeChar.getName());
-                   battleMan.doPlayerFlee();
+                   System.out.println(battleMan.doPlayerFlee(activeChar));
                }
                default -> {
                    System.out.println("Invalid choice, please choose again");
                }
            }
     }
+    
+    
+    private void printPlayerChoice(PlayerCharacter activeCharacter) {
+        if (!battleMan.isBossFight()) {
+            System.out.printf("----------%nWhat would %s like to do:%n", activeCharacter.getName());
+            System.out.println("1: Attack");
+            System.out.println("2: Magic");
+            System.out.println("3: Defend");
+            System.out.println("4: Flee");
+            System.out.print("Choice: ");
+        } else {
+            System.out.printf("----------%nWhat would %s like to do:%n", activeCharacter.getName());
+            System.out.println("1: Attack");
+            System.out.println("2: Magic");
+            System.out.println("3: Defend");
+            System.out.print("Choice: ");
+        }
+    }
+    
     
     public Enemy chooseTarget() {
         System.out.printf("----------%nWhich target would you like to attack?%n");

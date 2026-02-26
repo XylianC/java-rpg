@@ -37,7 +37,7 @@ public class BossesRepository {
         for (int i = 0; i < bossNodes.getLength(); i++) {
             Element bossElement = (Element) bossNodes.item(i);
             
-            NodeList possibleAttackNodes = enemyElement.getElementsByTagName("attacklist");
+            NodeList possibleAttackNodes = bossElement.getElementsByTagName("attacklist");
             ArrayList<String> possibleAttacks = new ArrayList<>();
             
             for (int j = 0; j < possibleAttackNodes.getLength(); j++) {

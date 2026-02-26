@@ -45,10 +45,6 @@ public class BattleManager {
         return attacks.getAttack(attackCode);
     }
     
-    public ArrayList<Enemy> getAliveEnemies() {
-        return enemyGroup.getEnemiesAlive();
-    }
-    
     public ArrayList<PlayerCharacter> getPartyMembersAlive() {
         return playerParty.getPartyMembersAlive();
     }
@@ -57,8 +53,12 @@ public class BattleManager {
         return this.playerParty.getPartySize();
     }
     
-    public PlayerCharacter getCharacterInfo(int slot) {
+    public PlayerCharacter getPartyMemberFromParty(int slot) {
         return this.playerParty.getPlayerBySlot(slot);
+    }
+    
+    public ArrayList<Enemy> getAliveEnemies() {
+        return enemyGroup.getEnemiesAlive();
     }
     
     public BossMonster getBossMonster() {return this.bossMonster;}
@@ -76,13 +76,23 @@ public class BattleManager {
             return String.format("Battle is over, player fled, no loot");
         }
     }
-    
-    private boolean areEnemiesAlive() {
-        return !enemyGroup.getEnemiesAlive().isEmpty();
+
+    ///  ------ Player Turn ------ ///
+    public String doPlayerAttack(Combatant target, PlayerCharacter activeCharacter) {
+        return activeCharacter.doAttack(target, attacks.getAttack("melee_attack"));
     }
     
-    private boolean arePlayersAlive() {
-        return !playerParty.getPartyMembersAlive().isEmpty();
+    public String doPlayerMagic(Combatant target, Attack chosenSpell, PlayerCharacter activeCharacter) {
+        return activeCharacter.doAttack(target, chosenSpell);
+    }
+    
+    public String doPlayerDefend(PlayerCharacter activeCharacter) {
+        return String.format("%s chose to defend. (DEBUG)", activeCharacter.getDisplayName());
+    }
+    
+    public String doPlayerFlee(PlayerCharacter activeCharacter) {
+        playerFled = true;
+        return String.format("%s chose to flee.", activeCharacter.getDisplayName());
     }
     
     ///  ----- Enemy Turn ------ ///
@@ -99,26 +109,17 @@ public class BattleManager {
         return activeEnemy.attemptAttack(playerTarget, attackToTry);
     }
     
-    ///  ------ Player Turn ------ ///
-    public String doPlayerAttack(Combatant target, PlayerCharacter activeCharacter) {
-        return activeCharacter.doAttack(target, attacks.getAttack("melee_attack"));
-    }
-    
-    public String doPlayerMagic(Combatant target, Attack chosenSpell, PlayerCharacter activeCharacter) {
-        return activeCharacter.doAttack(target, chosenSpell);
-    }
-    
-    public String doPlayerDefend() {
-        return String.format("");
-    }
-    
-    public void doPlayerFlee() {
-        playerFled = true;
-    }
-    
     ///  --- Help methods --- ///
     public int getRandom(int max) {
         return (int)(Math.random() * max);
+    }
+    
+    private boolean areEnemiesAlive() {
+        return !enemyGroup.getEnemiesAlive().isEmpty();
+    }
+    
+    private boolean arePlayersAlive() {
+        return !playerParty.getPartyMembersAlive().isEmpty();
     }
 }
 

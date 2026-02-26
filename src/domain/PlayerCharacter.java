@@ -2,8 +2,6 @@ package domain;
 
 import util.Classes;
 
-import java.util.ArrayList;
-
 public class PlayerCharacter extends Combatant{
     // -- Attributen -- //
     private final Classes charClass;
@@ -31,7 +29,7 @@ public class PlayerCharacter extends Combatant{
     
     ///  --- Class Specific Methods --- ////
     public void levelUp() {
-        resetStats();
+        recalculateStats();
         //todo: implement better method of levelling up, make it more advanced.
         //todo: add proper way of increasing the stats per level gained.
     }

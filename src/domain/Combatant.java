@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 public abstract class Combatant {
     // -- Attributen -- //
-    // Combatant is shortened to CMT
-    
     private final String name;
     
     private int level;
@@ -32,9 +30,6 @@ public abstract class Combatant {
     private static final int DEFAULT_HP = 100;
     private static final int DEFAULT_MP = 10;
     private static final int DEFAULT_SKILL_LEVEL = 1;
-    
-    private static final int MINIMUM_ACC_FOR_SUCCES = 100;
-    
     
     // -- Constructors -- //
     public Combatant(String name, int str, int intel, int hp, int mp, ArrayList<String> attackList) {
@@ -79,6 +74,26 @@ public abstract class Combatant {
         setHp(getMaxHP());
     }
     
+    public Combatant(String name, int lvl, int str, int intel, int hp, int mp) {
+        checkName(name);
+        this.name = name;
+        
+        setLevel(lvl);
+        this.baseSTR = str;
+        this.baseINTEL = intel;
+        this.baseHp = hp;
+        this.baseMp = mp;
+        
+        setStrength(calculateStats(baseSTR));
+        setIntelligence(calculateStats(baseINTEL));
+        
+        setMaxMP(calculateMagic());
+        setMp(getMaxMp());
+        
+        setMaxHP(calculateHealth());
+        setHp(getMaxHP());
+    }
+    
     public Combatant(Combatant original, int level) {
         this.name = original.getName();
         
@@ -103,6 +118,10 @@ public abstract class Combatant {
     // -- Getters -- //
     public String getName() {
         return name;
+    }
+    
+    public String getDisplayName() {
+        return getName();
     }
     
     public int getLevel() {
@@ -136,23 +155,7 @@ public abstract class Combatant {
     public boolean isAlive() {return isAlive;}
     
     
-    public String getDisplayName() {
-        return getName();
-    }
-    
-    
     // ---- Setters ---- //
-    public void resetStats() {
-        setStrength(calculateStats(baseSTR));
-        setIntelligence(calculateStats(baseINTEL));
-        
-        setMaxMP(calculateMagic());
-        setMp(getMaxMp());
-        
-        setMaxHP(calculateHealth());
-        setHp(getMaxHP());
-    }
-    
     public void setLevel(int lvl) {
         this.level = lvl;
     }
@@ -195,18 +198,14 @@ public abstract class Combatant {
     }
     
     public String attemptAttack(Combatant target, Attack attemptedAttack) {
-        //todo: attack logic comes here
-        boolean succes = false;
+        int succes = (int) (Math.random() * 100);
         
-        if ((attemptedAttack.getBaseAccuracy() * level) >= MINIMUM_ACC_FOR_SUCCES) {
+        if (succes <= attemptedAttack.getBaseAccuracy()) {
             return doAttack(target, attemptedAttack);
         } else {
             return String.format("%n%s attempts %s on %s.%nThe attack missed", this.getDisplayName(), attemptedAttack.getAttackName(), target.getDisplayName());
         }
-        
     }
-    
-    
     
     public String doAttack(Combatant target, Attack attackToDo) {
         //todo: attack logic comes here
@@ -252,17 +251,17 @@ public abstract class Combatant {
     public void takeDamage(double amount) {
         hp -= amount;
         if (hp <= 0) {
-            this.isAlive = false;
+            this.die();
         }
     }
     
-    private void checkName(String name) {
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("Combatant name can not be empty or null");
-        }
+    public void die() {
+        this.isAlive = false;
     }
     
-    public int calculateStats(int baseAmount) {
+    // Stat Calculations
+    
+    private int calculateStats(int baseAmount) {
         int statAmount = baseAmount + level;
         return statAmount;
     }
@@ -276,5 +275,24 @@ public abstract class Combatant {
         int amount = baseMp + (level * intelligence);
         return amount;
     }
+    
+    public void recalculateStats() {
+        setStrength(calculateStats(baseSTR));
+        setIntelligence(calculateStats(baseINTEL));
+        
+        setMaxMP(calculateMagic());
+        setMp(getMaxMp());
+        
+        setMaxHP(calculateHealth());
+        setHp(getMaxHP());
+    }
+    
+    // Helper methods
+    private void checkName(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Combatant name can not be empty or null");
+        }
+    }
+    
 }
 
