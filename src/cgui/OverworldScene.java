@@ -4,6 +4,7 @@ import javafx.scene.canvas.Canvas;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
+import overworld.Entity;
 import overworld.GameMap;
 import overworld.OverworldPlayer;
 import util.TileType;
@@ -29,6 +30,7 @@ public class OverworldScene {
     public void render() {
         gc.clearRect(0, 0, 512 * SCALE, 256 * SCALE);
         drawMap();
+        drawEntities();
         drawPlayer();
     }
     
@@ -39,6 +41,14 @@ public class OverworldScene {
                 
                 gc.drawImage(map.getTile(row, column).getSprite(), column * 16 * SCALE, row * 16 * SCALE, 16 * SCALE, 16 * SCALE);
             }
+        }
+    }
+    
+    public void drawEntities() {
+        for (int i = 0; i < map.getEntities().size(); i++) {
+            Entity entityToDraw = map.getEntities().get(i);
+            gc.drawImage(entityToDraw.getSprite(), entityToDraw.getPixelX() * SCALE, entityToDraw.getPixelY() * SCALE, 16 * SCALE, 16 * SCALE);
+        
         }
     }
     

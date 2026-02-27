@@ -8,14 +8,19 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.xml.sax.SAXException;
+import overworld.Entity;
 import overworld.GameMap;
 import overworld.OverworldPlayer;
 import persistence.MapRepository;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main extends Application {
+    ArrayList<Entity> entitiesToSpawnDEBUG = new ArrayList<>();
+    
+    
     public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
         launch(args);
     }
@@ -23,7 +28,8 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         MapRepository mapRepo = new MapRepository("overworld");
-        GameMap map = new GameMap(mapRepo);
+        createTemplateEntities();
+        GameMap map = new GameMap(mapRepo, entitiesToSpawnDEBUG);
         
         OverworldPlayer player = new OverworldPlayer(5, 5);
         OverworldScene worldScene = new OverworldScene(map, player);
@@ -58,5 +64,10 @@ public class Main extends Application {
         
         DomainController dc = new DomainController();
         //rpgApplication app = new rpgApplication(dc);
+    }
+    
+    public void createTemplateEntities() {
+        Entity entityToSpawn = new Entity(5, 3, "Monk", "monk");
+        entitiesToSpawnDEBUG.add(entityToSpawn);
     }
 }
