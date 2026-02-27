@@ -16,23 +16,23 @@ public class Tile {
     private final boolean hasTrigger;
     private final TriggerType triggerType;
     
-    private final Image sprite;
+    private Image sprite;
     
-    
-    
-    
-    
-    ///  --- Setters --- ///
-    public Tile(String tileName, int tileCode, boolean isWalkable, boolean hasTrigger, TileType tileType, TriggerType triggerType, Image sprite) {
-        this.tileName = tileName;
-        this.tileCode = tileCode;
-        this.isWalkable = isWalkable;
+    public Tile(TileType tileType) {
+        this.tileName = tileType.getName();
+        this.tileCode = tileType.getTileCode();
+        this.isWalkable = tileType.isWalkable();
         
-        this.hasTrigger = hasTrigger;
+        this.hasTrigger = tileType.hasTrigger();
+        this.triggerType = tileType.getTriggerType();
         this.tileType = tileType;
-        this.triggerType = triggerType;
+    }
+    
+    /// --- Setters --- ///
+    public void setTileSprite(Image sprite) {
         this.sprite = sprite;
     }
+    
     
     /// --- Getters --- ///
     public String getTileName() {

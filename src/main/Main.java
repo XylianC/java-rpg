@@ -1,13 +1,16 @@
 package main;
 
+import cgui.OverworldScene;
 import domain.DomainController;
-import cui.rpgApplication;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.xml.sax.SAXException;
+import overworld.GameMap;
+import overworld.OverworldPlayer;
+import persistence.MapRepository;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
@@ -19,11 +22,33 @@ public class Main extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Scene scene = new Scene(new StackPane(), 512, 256);
+        MapRepository mapRepo = new MapRepository("overworld");
+        GameMap map = new GameMap(mapRepo);
+        
+        OverworldPlayer player = new OverworldPlayer(5, 5);
+        OverworldScene worldScene = new OverworldScene(map, player);
+        
+        StackPane root = new StackPane(worldScene.getCanvas());
+        Scene scene = new Scene(root, 512, 256);
+        
+        scene.setOnKeyPressed(keyEvent -> {
+            int direction = 0;
+            KeyCode code = keyEvent.getCode();
+            switch (code) {
+                case UP -> direction = 1;
+                case DOWN -> direction = 2;
+                case LEFT -> direction = 3;
+                case RIGHT -> direction = 4;
+            }
+            player.move(direction, map);
+            worldScene.render();
+        });
+        
         stage.setScene(scene);
         stage.setTitle("CLI & GUI Adventures");
         stage.show();
         
+        worldScene.render();
         
         
         DomainController dc = new DomainController();
