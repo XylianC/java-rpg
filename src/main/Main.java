@@ -11,6 +11,7 @@ import org.xml.sax.SAXException;
 import overworld.Entity;
 import overworld.GameMap;
 import overworld.OverworldPlayer;
+import overworld.Tile;
 import persistence.MapRepository;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -50,8 +51,29 @@ public class Main extends Application {
                 case S -> direction = 2;
                 case Q -> direction = 3;
                 case D -> direction = 4;
+                case E -> {
+                    Entity nearbyEntity = player.getNearbyEntity(map);
+                    if(nearbyEntity != null) {
+                        ArrayList<String> lines = new ArrayList<>();
+                        lines.add("Hello traveller!");
+                        lines.add("Welcome to this world.");
+                        worldScene.startDialogue(lines);
+                    }
+                    Tile nearbyTile = player.getNearbyInteractable(map);
+                    if (nearbyTile != null) {
+                        // trigger tile interaction
+                    }
+                    
+                }
+                case SPACE -> {
+                    if(worldScene.isDialogueActive()){
+                        worldScene.advanceDialogue();
+                    }
+                }
             }
-            player.move(direction, map);
+            if(!worldScene.isDialogueActive()) {
+                player.move(direction, map);
+            }
             worldScene.render();
         });
         
@@ -67,7 +89,7 @@ public class Main extends Application {
     }
     
     public void createTemplateEntities() {
-        Entity entityToSpawn = new Entity(5, 3, "Monk", "monk");
+        Entity entityToSpawn = new Entity(6, 4, "Monk", "monk");
         entitiesToSpawnDEBUG.add(entityToSpawn);
     }
 }

@@ -4,10 +4,14 @@ import javafx.scene.canvas.Canvas;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import overworld.Entity;
 import overworld.GameMap;
 import overworld.OverworldPlayer;
+import overworld.Tile;
 import util.TileType;
+
+import java.util.ArrayList;
 
 
 public class OverworldScene {
@@ -15,6 +19,7 @@ public class OverworldScene {
     private OverworldPlayer player;
     private Canvas canvas;
     private GraphicsContext gc;
+    private DialogueBox db;
     
     private static final int SCALE = 3;
     
@@ -25,6 +30,7 @@ public class OverworldScene {
         canvas = new Canvas(512 * SCALE,256 * SCALE);
         gc = canvas.getGraphicsContext2D();
         gc.setImageSmoothing(false);
+        this.db = new DialogueBox(gc, SCALE);
     }
     
     public void render() {
@@ -32,6 +38,8 @@ public class OverworldScene {
         drawMap();
         drawEntities();
         drawPlayer();
+        drawExclamation();
+        db.drawDialogueBox();
     }
     
     public void drawMap() {
@@ -52,8 +60,35 @@ public class OverworldScene {
         }
     }
     
+    public void drawExclamation() {
+        gc.setFill(Paint.valueOf("white"));
+        gc.setFont(Font.font(12 * SCALE));
+        
+        Entity nearbyEntity = player.getNearbyEntity(map);
+        
+        if(player.getNearbyEntity(map) != null) {
+            gc.fillText("!", (nearbyEntity.getPixelX() + 6) * SCALE, (nearbyEntity.getPixelY() -8) * SCALE);
+        }
+        
+        if(player.getNearbyInteractable(map) != null) {
+            gc.fillText("!", player.getPixelX() * SCALE, (player.getPixelY() -8) * SCALE);
+        }
+    }
+    
     public void drawPlayer() {
         gc.drawImage(player.getSprite(), player.getPixelX() * SCALE, player.getPixelY() * SCALE, 16 * SCALE,16 * SCALE);
+    }
+    
+    public void startDialogue(ArrayList<String> lines) {
+        db.startDialogue(lines);
+    }
+    
+    public boolean isDialogueActive(){
+        return db.isActive();
+    }
+    
+    public void advanceDialogue() {
+        db.advanceLines();
     }
     
     public Canvas getCanvas() {
