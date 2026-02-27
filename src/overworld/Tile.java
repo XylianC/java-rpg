@@ -5,6 +5,8 @@ import util.TriggerType;
 
 import javafx.scene.image.Image;
 
+import java.util.Objects;
+
 
 public class Tile {
     private final String tileName;
@@ -21,11 +23,14 @@ public class Tile {
     public Tile(TileType tileType) {
         this.tileName = tileType.getName();
         this.tileCode = tileType.getTileCode();
+        
+        this.tileType = tileType;
         this.isWalkable = tileType.isWalkable();
         
         this.hasTrigger = tileType.hasTrigger();
         this.triggerType = tileType.getTriggerType();
-        this.tileType = tileType;
+        
+        this.sprite = new Image(Objects.requireNonNull(getClass().getResourceAsStream(tileType.getSpritepath())));
     }
     
     /// --- Setters --- ///

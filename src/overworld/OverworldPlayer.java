@@ -1,14 +1,22 @@
 package overworld;
 
+import javafx.scene.image.Image;
+
+import java.util.Objects;
+
 public class OverworldPlayer {
     private int gridX;
     private int gridY;
     
     private final static int tileSize = 16;
     
+    private Image sprite;
+    
     public OverworldPlayer(int gridY, int gridX) {
         this.gridY = gridY;
         this.gridX = gridX;
+        
+        this.sprite = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/sprites/spr_knight.png")));
     }
     
     public void move(int direction, GameMap map) {
@@ -68,5 +76,9 @@ public class OverworldPlayer {
     
     public int getPixelY() {
         return gridY * tileSize;
+    }
+    
+    public Image getSprite() {
+        return sprite;
     }
 }

@@ -15,15 +15,19 @@ public class OverworldScene {
     private Canvas canvas;
     private GraphicsContext gc;
     
+    private static final int SCALE = 3;
+    
+    
     public OverworldScene(GameMap theMap, OverworldPlayer thePlayer) {
         this.map = theMap;
         this.player = thePlayer;
-        canvas = new Canvas(512,256);
+        canvas = new Canvas(512 * SCALE,256 * SCALE);
         gc = canvas.getGraphicsContext2D();
+        gc.setImageSmoothing(false);
     }
     
     public void render() {
-        gc.clearRect(0, 0, 512, 256);
+        gc.clearRect(0, 0, 512 * SCALE, 256 * SCALE);
         drawMap();
         drawPlayer();
     }
@@ -33,27 +37,20 @@ public class OverworldScene {
             for (int column = 0; column < 32; column++) {
                 TileType tileType = map.getTile(row, column).getTileType();
                 
-                switch (tileType) {
-                    case GRASS -> gc.setFill(Paint.valueOf("green"));
-                    case DIRT -> gc.setFill(Paint.valueOf("brown"));
-                    case SAND -> gc.setFill(Paint.valueOf("yellow"));
-                    case WATER -> gc.setFill(Paint.valueOf("blue"));
-                    case TOWN -> gc.setFill(Paint.valueOf("red"));
-                    case CHEST -> gc.setFill(Paint.valueOf("orange"));
-                    default -> gc.setFill(Paint.valueOf("black"));
-                }
-                gc.fillRect(column * 16, row * 16, 16, 16);
-            
+                gc.drawImage(map.getTile(row, column).getSprite(), column * 16 * SCALE, row * 16 * SCALE, 16 * SCALE, 16 * SCALE);
             }
         }
     }
     
     public void drawPlayer() {
-        gc.setFill(Paint.valueOf("white"));
-        gc.fillRect(player.getPixelX(), player.getPixelY(), 16,16);
+        gc.drawImage(player.getSprite(), player.getPixelX() * SCALE, player.getPixelY() * SCALE, 16 * SCALE,16 * SCALE);
     }
     
     public Canvas getCanvas() {
         return canvas;
+    }
+    
+    public int getSCALE() {
+        return SCALE;
     }
 }

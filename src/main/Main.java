@@ -29,7 +29,8 @@ public class Main extends Application {
         OverworldScene worldScene = new OverworldScene(map, player);
         
         StackPane root = new StackPane(worldScene.getCanvas());
-        Scene scene = new Scene(root, 512, 256);
+        int scale = 3;
+        Scene scene = new Scene(root, 512 * worldScene.getSCALE(), 256 * worldScene.getSCALE());
         
         scene.setOnKeyPressed(keyEvent -> {
             int direction = 0;
@@ -39,6 +40,10 @@ public class Main extends Application {
                 case DOWN -> direction = 2;
                 case LEFT -> direction = 3;
                 case RIGHT -> direction = 4;
+                case Z -> direction = 1;
+                case S -> direction = 2;
+                case Q -> direction = 3;
+                case D -> direction = 4;
             }
             player.move(direction, map);
             worldScene.render();

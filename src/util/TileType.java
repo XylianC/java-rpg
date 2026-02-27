@@ -4,11 +4,17 @@ import overworld.Tile;
 
 public enum TileType {
     GRASS(0, "grassTile", true, false, TriggerType.NONE),
-    DIRT(1,"dirtTile", true, false, TriggerType.NONE),
-    SAND(2, "sandTile",  true, false, TriggerType.NONE),
-    WATER(3, "waterTile", false, false, TriggerType.NONE),
-    TOWN(4,"townTile", true, true, TriggerType.OPEN_CHEST),
-    CHEST(5,"chestTile", false, true, TriggerType.OPEN_CHEST);
+    GRASSSPAWN(1, "grassTileSpawn", true, true, TriggerType.START_BATTLE),
+    TREE(2, "treeTile", false, false, TriggerType.NONE),
+    
+    DIRT(3,"dirtTile", true, false, TriggerType.NONE),
+    BOULDER(4, "boulderTile", false, false, TriggerType.NONE),
+    
+    SAND(5, "sandTile",  true, false, TriggerType.NONE),
+    WATER(6, "waterTile", false, false, TriggerType.NONE),
+    
+    TOWN(10,"townTile", true, true, TriggerType.OPEN_CHEST),
+    CHEST(11,"chestTile", false, true, TriggerType.OPEN_CHEST);
     
     // Een interne variabele om extra data aan de enum te koppelen
     private final int tileCode;
@@ -16,6 +22,7 @@ public enum TileType {
     private final boolean isWalkable;
     private final boolean hasTrigger;
     private final TriggerType triggerType;
+    private final String spritepath;
     
     // Constructor voor de enum
     TileType(int tilecode, String tileName, boolean isWalkable, boolean hasTrigger, TriggerType triggerType) {
@@ -24,6 +31,7 @@ public enum TileType {
         this.isWalkable = isWalkable;
         this.hasTrigger = hasTrigger;
         this.triggerType = triggerType;
+        this.spritepath = "/images/tiles/spr_" + tileName + ".png";
     }
     
     public String getName() {
@@ -44,6 +52,10 @@ public enum TileType {
     
     public TriggerType getTriggerType() {
         return triggerType;
+    }
+    
+    public String getSpritepath() {
+        return this.spritepath;
     }
     
     public static TileType getTileTypeFromCode(int input) {
