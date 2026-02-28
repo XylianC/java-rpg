@@ -1,0 +1,24 @@
+<NPCs>
+    <NPC>
+        <npcName>Default</npcName>
+        <dialogue>
+            <line>"Please, take care of our world.."</line>
+        </dialogue>
+    </NPC>
+    <NPC>
+        <npcName>Monk</npcName>
+        <dialogue>
+            <line>"Hello, welcome to the world!"</line>
+            <line>"This is the second line."</line>
+            <line>"And this is the final line!"</line>
+        </dialogue>
+    </NPC>
+    <NPC>
+        <npcName>Mage</npcName>
+        <dialogue>
+            <line>"Hello, welcome to our town!"</line>
+            <line>"I can learn you new magic spells."</line>
+            <line>"Is there anything you would like to learn?"</line>
+        </dialogue>
+    </NPC>
+</NPCs>

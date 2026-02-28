@@ -2,6 +2,7 @@ package overworld;
 
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Entity {
@@ -20,8 +21,6 @@ public class Entity {
         this.entityName = entityName;
         
         this.sprite = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/sprites/npcs/spr_" + spriteName + ".png")));
-        
-        
     }
     
     public String getEntityName() {
@@ -47,4 +46,5 @@ public class Entity {
     public Image getSprite() {
         return sprite;
     }
+    
 }

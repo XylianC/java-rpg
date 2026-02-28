@@ -9,6 +9,7 @@ import overworld.Entity;
 import overworld.GameMap;
 import overworld.OverworldPlayer;
 import overworld.Tile;
+import persistence.DialogueRepository;
 import util.TileType;
 
 import java.util.ArrayList;
@@ -20,17 +21,19 @@ public class OverworldScene {
     private Canvas canvas;
     private GraphicsContext gc;
     private DialogueBox db;
+    private DialogueRepository dialogueRepo;
     
     private static final int SCALE = 3;
     
     
-    public OverworldScene(GameMap theMap, OverworldPlayer thePlayer) {
+    public OverworldScene(GameMap theMap, OverworldPlayer thePlayer, DialogueRepository dialogueRepo) {
         this.map = theMap;
         this.player = thePlayer;
         canvas = new Canvas(512 * SCALE,256 * SCALE);
         gc = canvas.getGraphicsContext2D();
         gc.setImageSmoothing(false);
         this.db = new DialogueBox(gc, SCALE);
+        this.dialogueRepo = dialogueRepo;
     }
     
     public void render() {
@@ -79,8 +82,8 @@ public class OverworldScene {
         gc.drawImage(player.getSprite(), player.getPixelX() * SCALE, player.getPixelY() * SCALE, 16 * SCALE,16 * SCALE);
     }
     
-    public void startDialogue(ArrayList<String> lines) {
-        db.startDialogue(lines);
+    public void startDialogue(String npcName) {
+        db.startDialogue(dialogueRepo.getDialogue(npcName));
     }
     
     public boolean isDialogueActive(){

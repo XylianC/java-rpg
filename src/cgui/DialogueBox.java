@@ -13,6 +13,7 @@ public class DialogueBox {
     private int currentLineIndex;
     
     private GraphicsContext gc;
+    private int tileSize = 16;
     private int scale;
     
     public DialogueBox(GraphicsContext gc, int scale) {
@@ -38,12 +39,12 @@ public class DialogueBox {
         if(!isActive) return;
         
         gc.setFill(Paint.valueOf("Blue"));
-        gc.fillRect(0, 576, 1536, 192);
+        gc.fillRect(1.5 * tileSize * scale, 10 * tileSize * scale, 29 * tileSize * scale, 4.5 * tileSize * scale);
         gc.setLineWidth(4);
-        gc.strokeRect(0, 576, 1536, 192);
+        gc.strokeRect(1.5 * tileSize * scale, 10 * tileSize * scale, 29 * tileSize * scale, 4.5 * tileSize * scale);
         gc.setFill(Paint.valueOf("White"));
         gc.setFont(Font.font("Monospaced", 24));
-        gc.fillText(dialogueLines.get(currentLineIndex), 48, 576+64);
+        gc.fillText(dialogueLines.get(currentLineIndex), 2.5 * tileSize * scale, 11 * tileSize * scale);
     }
     
     public boolean isActive() {

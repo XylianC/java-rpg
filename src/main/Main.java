@@ -12,6 +12,7 @@ import overworld.Entity;
 import overworld.GameMap;
 import overworld.OverworldPlayer;
 import overworld.Tile;
+import persistence.DialogueRepository;
 import persistence.MapRepository;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -29,11 +30,12 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         MapRepository mapRepo = new MapRepository("overworld");
+        DialogueRepository dialogueRepo = new DialogueRepository();
         createTemplateEntities();
         GameMap map = new GameMap(mapRepo, entitiesToSpawnDEBUG);
         
         OverworldPlayer player = new OverworldPlayer(5, 5);
-        OverworldScene worldScene = new OverworldScene(map, player);
+        OverworldScene worldScene = new OverworldScene(map, player, dialogueRepo);
         
         StackPane root = new StackPane(worldScene.getCanvas());
         int scale = 3;
@@ -52,22 +54,32 @@ public class Main extends Application {
                 case Q -> direction = 3;
                 case D -> direction = 4;
                 case E -> {
-                    Entity nearbyEntity = player.getNearbyEntity(map);
-                    if(nearbyEntity != null) {
-                        ArrayList<String> lines = new ArrayList<>();
-                        lines.add("Hello traveller!");
-                        lines.add("Welcome to this world.");
-                        worldScene.startDialogue(lines);
-                    }
-                    Tile nearbyTile = player.getNearbyInteractable(map);
-                    if (nearbyTile != null) {
-                        // trigger tile interaction
+                    if(worldScene.isDialogueActive()){
+                        worldScene.advanceDialogue();
+                    } else {
+                        Entity nearbyEntity = player.getNearbyEntity(map);
+                        if(nearbyEntity != null) {
+                            worldScene.startDialogue(nearbyEntity.getEntityName());
+                        }
+                        Tile nearbyTile = player.getNearbyInteractable(map);
+                        if (nearbyTile != null) {
+                            // trigger tile interaction
+                        }
                     }
                     
                 }
                 case SPACE -> {
                     if(worldScene.isDialogueActive()){
                         worldScene.advanceDialogue();
+                    } else {
+                        Entity nearbyEntity = player.getNearbyEntity(map);
+                        if(nearbyEntity != null) {
+                            worldScene.startDialogue(nearbyEntity.getEntityName());
+                        }
+                        Tile nearbyTile = player.getNearbyInteractable(map);
+                        if (nearbyTile != null) {
+                            // trigger tile interaction
+                        }
                     }
                 }
             }
@@ -83,13 +95,13 @@ public class Main extends Application {
         
         worldScene.render();
         
-        
-        DomainController dc = new DomainController();
-        //rpgApplication app = new rpgApplication(dc);
+        // DomainController dc = new DomainController();
+        // rpgApplication app = new rpgApplication(dc);
     }
     
     public void createTemplateEntities() {
-        Entity entityToSpawn = new Entity(6, 4, "Monk", "monk");
+        Entity entityToSpawn = new Entity(6, 4, "Mage", "monk");
         entitiesToSpawnDEBUG.add(entityToSpawn);
     }
+    
 }
